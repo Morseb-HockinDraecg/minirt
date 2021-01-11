@@ -1,44 +1,60 @@
-SRC_DIR	:= srcs/
-OBJ_DIR	:= obj/
-BIN_DIR	:= bin/
-INC_DIR	:= minilibx/ inc/
+PROJ_DIR := minirt/
+SRC_DIR	:= $(PROJ_DIR)srcs/
+OBJ_DIR	:= $(PROJ_DIR)obj/
+BIN_DIR	:= $(PROJ_DIR)bin/
+INC_DIR	:= minilibx/ $(PROJ_DIR)inc/
 
 NAME	:= $(BIN_DIR)minirt
+#NORME : pas de wildcard !!
 SRC		:= $(wildcard $(SRC_DIR)*.c) $(wildcard $(SRC_DIR)*/*.c)
 OBJ		:= $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
 CC		:= gcc
 CFLAGS	:= -Wall -Wextra -Werror
-INCLUDE	:= -Iminilibx -Iinc
-LDFLAGS	:= -Lminilibx -lmlx 
+INCLUDE	:= -Iminilibx -I$(PROJ_DIR)inc -Ilibft
+LDFLAGS	:= -Lminilibx -lmlx -Llibft -lft
 
 .PHONY: all clean fclean re
 .SILENT:
 
-all: $(NAME)
+all: libft minilib $(NAME)
 
-$(NAME): $(OBJ) | $(BIN_DIR)
+$(NAME):  $(OBJ) | $(BIN_DIR)
 	$(CC) $(LDFLAGS) $^ -o $@
 	$(info $@ created)
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(INC_DIR)*.h | $(OBJ_DIR)
+libft:
+	make -C libft
+	$(info $@ created)
+
+minilib:
+	make -C minilibx
+	$(info $@ created)
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(INC_DIR)mini_rt.h | $(OBJ_DIR)
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 	$(info $@ created)
 
 $(BIN_DIR) $(OBJ_DIR):
-	mkdir -p $@
+	mkdir -p $(PROJ_DIR)$@
 	$(info $(notdir $@) created)
 
 clean:
 	$(RM) -rf $(OBJ_DIR)
 	$(info $(OBJ_DIR) deleted)
+	make -C libft clean
+	make -C minilibx clean
 
 fclean: clean
 	$(RM) -rf $(BIN_DIR)
 	$(info $(BIN_DIR) deleted)
+	make -C libft fclean
+	make -C minilibx fclean
 
 fclean_re:
+	make -C libft re
+	make -C minilibx re
 	$(RM) -rf $(OBJ_DIR)/*
 	$(info $(OBJ_DIR) deleted)
 	$(RM) -rf $(BIN_DIR)
