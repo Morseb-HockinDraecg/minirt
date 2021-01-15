@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:12 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/13 07:57:09 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/15 08:29:14 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void parse_line(char *line)
 	printf("%s\n", line);
 }
 
-void	ft_parse(char *rt_file)
+void	ft_parse(char *rt_file, int save)
 {
 	int		fd;
 	int		ret;
@@ -33,5 +33,5 @@ void	ft_parse(char *rt_file)
 		parse_line(line);
 		free(line);
 	}
-	display();
+	display(save);
 }

@@ -1,8 +1,7 @@
 #include "mini_rt.h"
 
-unsigned char	*create_bitmap_file_header(int height, int stride)
+unsigned char	*create_bitmap_file_header(int file_size)
 {
-	int						file_size;
 	static unsigned char	file_header[] = {
 		0, 0,     /// signature
 		0, 0, 0, 0, /// image file size in bytes
@@ -10,7 +9,6 @@ unsigned char	*create_bitmap_file_header(int height, int stride)
 		0, 0, 0, 0, /// start of pixel array
 	};
 
-	file_size = 14 + 40 + (stride * height);
 	file_header[0] = (unsigned char)('B');
 	file_header[1] = (unsigned char)('M');
 	file_header[2] = (unsigned char)(file_size);
@@ -21,7 +19,7 @@ unsigned char	*create_bitmap_file_header(int height, int stride)
 	return (file_header);
 }
 
-unsigned char	*create_bitmap_info_header(t_mlx *mlx)
+unsigned char	*create_bitmap_info_header(t_mlx *mlx, int size)
 {
 	static unsigned char info_header[40] = {
 		0, 0, 0, 0, /// header size
@@ -47,61 +45,37 @@ unsigned char	*create_bitmap_info_header(t_mlx *mlx)
 	info_header[10] = (unsigned char)(mlx->H >> 16);
 	info_header[11] = (unsigned char)(mlx->H >> 24);
 	info_header[12] = (unsigned char)(1);
-	info_header[14] = (unsigned char)(4 * 8);
-	info_header[20] = (mlx->W * mlx->H * 3 + (40 + 14)) >> 0;
-	info_header[21] = (mlx->W * mlx->H * 3 + (40 + 14)) >> 8;
-	info_header[22] = (mlx->W * mlx->H * 3 + (40 + 14)) >> 16;
-	info_header[23] = (mlx->W * mlx->H * 3 + (40 + 14)) >> 0;
+	info_header[14] = (unsigned char)(mlx->ptr_img->bits_per_pixel);
+	info_header[20] = (size) >> 0;
+	info_header[21] = (size) >> 8;
+	info_header[22] = (size) >> 16;
+	info_header[23] = (size) >> 24;
 	return (info_header);
 }
 
-void			write_img(int fd, t_data *data, t_mlx *mlx, int y)
+void			write_img(int fd, t_data *img, t_mlx *mlx, int y)
 {
-// 	int		x;
-// 	int		x_line;
-// 	char	*img_line;
-
-    while (y != 0)
-        write(fd, data->addr + (y-- *  mlx->W), mlx->W * 4);
-
-	// while (--y >= 0)
-	// {
-	// 	if (!(img_line = malloc(mlx->W * 3 + mlx->H % 4)))
-	// 		error_minirt(31);
-	// 	x = -1;
-	// 	x_line = 0;
-	// 	while (++x < mlx->W)
-	// 	{
-	// 		img_line[x_line + 0] = data->addr[x + mlx->H * mlx->W] % (int)pow(16, 2);
-	// 		img_line[x_line + 1] = ((data->addr[x + mlx->H * mlx->W] % (int)pow(16, 4)) - img_line[x_line]) >> 8;
-	// 		img_line[x_line + 2] = ((data->addr[x + mlx->H * mlx->W] % (int)pow(16, 6)) - img_line[x_line + 1]) >> 16;
-	// 		x_line += 3;
-		// }
-		// write(fd, img_line, mlx->W * 3 + mlx->W % 4);
-		// free(img_line);
-		// img_line = NULL;
-	// }
+	while (y)
+		write(fd, img->addr + (y-- * mlx->W), mlx->W * 4);
 }
 
 void			save_bmp(const char *filename, t_data *img, t_mlx *mlx)
 {
 	int		fd;
-	int		size;
 	int		stride;
+	int		img_size;
+	int		file_size;
 
-	// const int BYTES_PER_PIXEL = 3; /// red, green, & blue
-	// const int FILE_HEADER_SIZE = 14;
-	// const int INFO_HEADER_SIZE = 40
-	size = mlx->W * mlx->H * 3 + (40 + 14);
-	stride = (mlx->W * 3) + ((4 - (mlx->W * 3) % 4) % 4);
+	stride = mlx->W * 4;
+	img_size = stride * mlx->H;
+	file_size = img_size + (40 + 14);
 	if (mlx->W % 4 != 0)
-		size += mlx->W % 4 * mlx->H;
+		file_size += mlx->W % 4 * mlx->H;
 	close(open(filename, O_RDONLY | O_CREAT, S_IRWXU));
 	fd = open(filename, O_RDWR);
-	write(fd, create_bitmap_file_header(mlx->H, stride), 14);
-	write(fd, create_bitmap_info_header(mlx), 40);
+	write(fd, create_bitmap_file_header(file_size), 14);
+	write(fd, create_bitmap_info_header(mlx, file_size), 40);
 	write_img(fd, img, mlx, mlx->H);
-	(void)img;
 	close(fd);
 	ft_putstr_fd("Image generated!!", 1);
 }

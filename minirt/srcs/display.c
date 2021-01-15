@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:29:54 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/15 08:15:03 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/15 12:36:15 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	display(void)
 	int		x;
 	int		y;
 
-	mlx.W = 2048;
-	mlx.H = 1024;
+	mlx.W = 1500;
+	mlx.H = 1500;
 
 	x = 0;
 	y = 0;

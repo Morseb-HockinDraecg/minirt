@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/14 16:41:35 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/15 08:28:59 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int				mouse_hook(int z, int x, int y);
 int				init_minrt(t_mlx *mlx);
 
 void			display();
-void			ft_parse(char *rt_file);
+void			ft_parse(char *rt_file, int save);
 
 int		create_trgb(int t, int r, int g, int b);
 int		get_r(int trgb);

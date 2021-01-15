@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:21 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/14 16:40:25 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/15 11:41:30 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,9 @@ void		print_img(t_mlx *mlx)
 	float r, g, b;
 	t_data	img;
 	
-	// mlx_string_put(mlx->ptr, mlx->win, 20, 20, 0x00FF0000, "Hello !!!!!");
+	mlx->ptr_img = &img;
 	img.img = mlx_new_image(mlx->ptr, mlx->W, mlx->H);
 	img.addr = (int *)mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	printf("%d\n", img.bits_per_pixel);
-
 	while (x++ < mlx->W)
 	{
 		y = mlx->H - 1;
@@ -46,7 +44,7 @@ void		print_img(t_mlx *mlx)
 			r = (float)y/(float)(mlx->W);
 			g = (float)x/(float)(mlx->H);
 			b = 0.2;
-			my_mlx_pixel_put(&img, x, y, create_trgb(00, (int)(255.99 * r), (int)(255.99 * g), (int)(255.99 * b)));
+			my_mlx_pixel_put(&img, x, y, create_trgb(00, (int)(255.99 * r) * 2, (int)(255.99 * g), (int)(255.99 * b)));
 		}
 	}
 	mlx_put_image_to_window(mlx->ptr, mlx->win, img.img, 0, 0);
@@ -65,6 +63,7 @@ void		print_img(t_mlx *mlx)
 
 	save_bmp("img_test.bmp", &img, mlx);
 }
+
 int			key_hook(int keycode, t_mlx *mlx)
 {
 	if (keycode == 53)
