@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/15 08:28:59 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/15 15:20:20 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 typedef struct	s_data 
 {
 	void	*img;
-	// char		*addr;
 	int		*addr;
 	int		bits_per_pixel;
 	int		line_length;
