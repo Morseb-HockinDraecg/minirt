@@ -16,24 +16,30 @@ NAME=libmlx.dylib
 INC=-I.
 #OPTI=-Ounchecked
 
+.SILENT:
+
 all: $(NAME)
 
 $(NAME): $(MODULE_OBJ) $(OBJ) $(C_OBJ)
 	swiftc $(OPTI) $(INC) -o $(NAME) -emit-library $(OBJ) $(C_OBJ) -lz
-
-
+	echo "$(PROJ_DIR)$@ \033[32mcreated\033[0m"
+	echo "--------------------------------------------"
 
 %.o: %.swift
 	swiftc $(OPTI) $(INC) -parse-as-library -c $< -o $@
+	echo "$(PROJ_DIR)$@ \033[32mcreated\033[0m"
 
 %.swiftmodule: %.swift
 	swiftc $(OPTI) $(INC) -parse-as-library -c $< -o $@ -emit-module -module-name $(patsubst %.swift,%,$<) -module-link-name $(patsubst %.swift,%,$<)
+	echo "$(PROJ_DIR)$@ \033[32mcreated\033[0m"
 
 clean:
 	rm -f  $(OBJ) $(MODULE_OBJ) $(C_OBJ) *.swiftdoc *~
+	echo "$(OBJ) \033[31mdeleted\033[0m"
 
 fclean: clean
 	rm -f $(NAME)
+	echo "$(NAME) \033[31mdeleted\033[0m"
 
 
 re: fclean all

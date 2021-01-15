@@ -1,18 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   display.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/12 16:29:54 by smorel            #+#    #+#             */
+/*   Updated: 2021/01/15 08:15:03 by smorel           ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mini_rt.h"
 
-void     display()
+void	display(void)
 {
-    t_mlx mlx;
-    t_data img;
-    int x, y;
+	t_mlx	mlx;
+	int		x;
+	int		y;
 
-    init_minrt(&mlx);
-    // img.img = mlx_new_image (mlx.ptr, 1980, 1080);
-    img.img = mlx_xpm_file_to_image ( mlx.ptr, "/Users/smorel/Desktop/img1.xpm", &x, &y);
-    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-    mlx_put_image_to_window(mlx.ptr, mlx.win, img.img, 0, 0 );
-    mlx_mouse_hook(mlx.win, key_hook, &mlx);
-    mlx_hook(mlx.win, 2, 1L<<4, key_hook, &mlx);
-    mlx_mouse_hook(mlx.win, mouse_hook, &mlx);
-    mlx_loop(mlx.ptr);
+	mlx.W = 2048;
+	mlx.H = 1024;
+
+	x = 0;
+	y = 0;
+	init_minrt(&mlx);
+	// mlx_mouse_hook(mlx.win, key_hook, &mlx);
+	mlx_mouse_hook(mlx.win, mouse_hook, &mlx);
+	mlx_hook(mlx.win, 2, 1L << 4, key_hook, &mlx);
+	mlx_loop(mlx.ptr);
 }
