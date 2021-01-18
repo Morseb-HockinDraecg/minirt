@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:21 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/15 17:10:28 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/18 08:21:56 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ void            my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
     int    *dst;
 
-    // dst = data->addr + ((y * data->line_length / 4 + x));
-    dst = data->addr + ((y * data->line_length /4 + x));
+    dst = data->addr + (y * data->line_length / (data->bits_per_pixel / 8) + x);
     *(unsigned int*)dst = color;
 }
 

@@ -55,7 +55,7 @@ unsigned char	*create_bitmap_info_header(t_mlx *mlx, int size)
 void			write_img(int fd, t_data *img, t_mlx *mlx, int y)
 {
 	while (y)
-		write(fd, img->addr + (y-- * mlx->W), 4 * mlx->W);
+		write(fd, img->addr + (y-- * img->line_length / (img->bits_per_pixel / 8)), 4 * mlx->W);
 }
 
 void			save_bmp(const char *filename, t_data *img, t_mlx *mlx)
