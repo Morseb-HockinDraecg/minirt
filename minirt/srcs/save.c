@@ -34,14 +34,14 @@ unsigned char	*create_bitmap_info_header(t_mlx *mlx, int size)
 		0, 0, 0, 0, /// important color count
 	};
 	info_header[0] = (unsigned char)(40);
-	info_header[4] = (unsigned char)(mlx->W >> 0);
-	info_header[5] = (unsigned char)(mlx->W >> 8);
-	info_header[6] = (unsigned char)(mlx->W >> 16);
-	info_header[7] = (unsigned char)(mlx->W >> 24);
-	info_header[8] = (unsigned char)(mlx->H >> 0);
-	info_header[9] = (unsigned char)(mlx->H >> 8);
-	info_header[10] = (unsigned char)(mlx->H >> 16);
-	info_header[11] = (unsigned char)(mlx->H >> 24);
+	info_header[4] = (unsigned char)(mlx->w >> 0);
+	info_header[5] = (unsigned char)(mlx->w >> 8);
+	info_header[6] = (unsigned char)(mlx->w >> 16);
+	info_header[7] = (unsigned char)(mlx->w >> 24);
+	info_header[8] = (unsigned char)(mlx->h >> 0);
+	info_header[9] = (unsigned char)(mlx->h >> 8);
+	info_header[10] = (unsigned char)(mlx->h >> 16);
+	info_header[11] = (unsigned char)(mlx->h >> 24);
 	info_header[12] = (unsigned char)(1);
 	info_header[14] = (unsigned char)(mlx->ptr_img->bits_per_pixel);
 	// info_header[20] = (size) >> 0;
@@ -55,7 +55,7 @@ unsigned char	*create_bitmap_info_header(t_mlx *mlx, int size)
 void			write_img(int fd, t_data *img, t_mlx *mlx, int y)
 {
 	while (y)
-		write(fd, img->addr + (y-- * img->line_length / (img->bits_per_pixel / 8)), 4 * mlx->W);
+		write(fd, img->addr + (y-- * img->line_length / (img->bits_per_pixel / 8)), 4 * mlx->w);
 }
 
 void			save_bmp(const char *filename, t_data *img, t_mlx *mlx)
@@ -64,13 +64,13 @@ void			save_bmp(const char *filename, t_data *img, t_mlx *mlx)
 	int		img_size;
 	int		file_size;
 
-	img_size = mlx->W * 4 * mlx->H;
+	img_size = mlx->w * 4 * mlx->h;
 	file_size = img_size + (40 + 14);
 	close(open(filename, O_RDONLY | O_CREAT, S_IRWXU));
 	fd = open(filename, O_RDWR);
 	write(fd, create_bitmap_file_header(file_size), 14);
 	write(fd, create_bitmap_info_header(mlx, img_size), 40);
-	write_img(fd, img, mlx, mlx->H);
+	write_img(fd, img, mlx, mlx->h);
 	close(fd);
 	ft_putstr_fd("Image generated!!", 1);
 }

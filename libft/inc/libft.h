@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 16:33:37 by smorel            #+#    #+#             */
-/*   Updated: 2020/12/05 10:26:16 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/20 09:47:45 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void				**ft_memdel_2d(void **s, int i);
 char				**ft_strdel_2d(char **s, int i);
 void				ft_memdel(void **ap);
 char				*ft_strncpy(char *dst, const char *src, size_t len);
+int					ft_isspace(int c);
 
 int					ft_lstsize(t_list *lst);
 t_list				*ft_lstnew(const void *content);
