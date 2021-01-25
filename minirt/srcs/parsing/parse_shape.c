@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 10:38:57 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/20 16:26:15 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/25 11:25:43 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,22 @@ printf("Hi from cy\n");
 
 void	parse_sphere(char *line, t_mlx *mlx)
 {
-printf("Hi from sp\n");
-(void)line;
-(void)mlx;
+	t_shape	*sp;
+
+	sp = init_shape();
+	if (!ft_isspace(*line++) && !ft_isdigit(*line))
+		error_minirt(22);
+	trim_ws(&line);
+	trim_coord(&line, &sp->origin);
+	trim_ws(&line);
+	if ((sp->rayon = trim_float(&line) / 2) < 0)
+		error_minirt(23);
+	trim_ws(&line);
+	trim_coord(&line, &sp->rgb);
+	check_rgb(&sp->rgb);
+	// ft_lstadd_back(&mlx->sc->shape, ft_lstnew(&sp));
+	// (void)mlx;
+	mlx->sc->shape = sp;
 }
 
 void	parse_square(char *line, t_mlx *mlx)

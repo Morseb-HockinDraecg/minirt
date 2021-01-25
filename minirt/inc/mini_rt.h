@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/20 15:45:26 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/25 16:16:21 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,51 +62,24 @@ typedef struct	s_spot
 	t_coord	rgb;
 }				t_spot;
 
-typedef struct	s_sphere
+typedef struct	s_shape
 {
 	t_coord	origin;
-	float	diametre;
 	t_coord	rgb;
-}				t_sphere;
-
-typedef struct	s_plane
-{
-	t_coord	origin;
-	t_coord	vector;
-	t_coord	rgb;
-}				t_plane;
-
-typedef struct	s_square
-{
-	t_coord	origin;
-	t_coord	vector;
+	float	rayon;
 	float	hight;
-	t_coord	rgb;
-}				t_square;
-
-typedef struct	s_cylindre
-{
-	t_coord	origin;
 	t_coord	vector;
-	float	diametre;
-	float	hight;
-	t_coord	rgb;
-}				t_cylindre;
+	t_coord	point;
 
-typedef struct	s_triangle
-{
-	t_coord	a;
-	t_coord	b;
-	t_coord	c;
-	t_coord	rgb;
-}				t_triangle;
+}				t_shape;
 
 typedef struct	s_scene
 {
 	t_light	l;
 	t_cam	c;
 	t_spot	s;
-	t_list	shape;
+	// t_list	*shape;
+	t_shape *shape;
 }				t_scene;
 
 /*
@@ -128,8 +101,10 @@ typedef struct	s_mlx
 	void	*win;
 	int		w;
 	int		h;
+	int		save;
 	t_data	*ptr_img;
 	t_scene	*sc;
+	t_coord	tmp;
 }				t_mlx;
 
 void			save_bmp(const char *filename, t_data *img, t_mlx *mlx);
@@ -150,8 +125,11 @@ int				mouse_hook(int z, int x, int y);
 int				init_minrt(t_mlx *mlx);
 void			set_value_4_pars(t_mlx *mlx);
 void			check_mandatories_values(t_mlx *mlx);
+t_shape			*init_shape(void);
 
 void			display(t_mlx *mlx);
+int			close_win(t_mlx *mlx);
+void		print_img(t_mlx *mlx);
 
 /*
 **	Parsing

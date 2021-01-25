@@ -6,11 +6,18 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:07 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/20 13:53:46 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/25 16:18:08 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
+
+static void	init_coord(t_coord *c)
+{
+	c->x = -1;
+	c->y = -1;
+	c->z = -1;
+}
 
 int	init_minrt(t_mlx *mlx)
 {
@@ -26,9 +33,9 @@ void	set_value_4_pars(t_mlx *mlx)
 	mlx->h = -1;
 	mlx->w = -1;
 	mlx->sc->l.r = -1;
-	mlx->sc->l.rgb.x = -1;
-	mlx->sc->l.rgb.y = -1;
-	mlx->sc->l.rgb.z = -1;
+	init_coord(&mlx->sc->l.rgb);
+	mlx->save = 0;
+	// mlx->sc->shape = NULL;
 }
 
 void	check_mandatories_values(t_mlx *mlx)
@@ -40,4 +47,18 @@ void	check_mandatories_values(t_mlx *mlx)
 	mlx->sc->l.rgb.y < 0 ||
 	mlx->sc->l.rgb.z < 0)
 	error_parsing(25);
+}
+
+t_shape	*init_shape(void)
+{
+	t_shape	*sh;
+
+	sh = (t_shape *)malloc(sizeof(t_shape));
+	init_coord(&sh->origin);
+	init_coord(&sh->rgb);
+	init_coord(&sh->vector);
+	init_coord(&sh->point);
+	sh->rayon = 0;
+	sh->hight = 0;
+	return (sh);
 }

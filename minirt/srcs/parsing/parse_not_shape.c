@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 10:03:53 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/20 16:22:42 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/25 11:50:55 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	parse_cam(char *line, t_mlx *mlx)
 	mlx->sc->c.fov = trim_float(&line);
 	if (mlx->sc->c.fov < 0 || mlx->sc->c.fov > 180)
 		error_minirt(23);
+	mlx->sc->c.fov *= M_PI / 180;
 }
 
 void	parse_spot(char *line, t_mlx *mlx)
