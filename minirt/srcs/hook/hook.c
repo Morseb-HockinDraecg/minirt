@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:21 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/25 16:15:35 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/25 16:41:10 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,36 +30,30 @@ void            my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 int			has_intersection(t_ray *ray, t_shape *sp, t_coord *p, t_coord *n)
 {
-	float a;
-	float b;
-	float c;
-	float delta;
-	float t1;
-	float t2;
+	t_quadratic q;
+
 	v_minus(&ray->origin, &sp->origin);
-	a = 1;
-	b = 2.0 * v_dot(&ray->direction, &ray->origin);
-	c = v_norm2(&ray->origin) - (sp->rayon) * (sp->rayon);
-	delta = b * b - 4 * 1 *c;
-	if (delta < 0)
+	q.a = 1;
+	q.b = 2.0 * v_dot(&ray->direction, &ray->origin);
+	q.c = v_norm2(&ray->origin) - (sp->rayon) * (sp->rayon);
+	q.delta = q.b * q.b - 4 * 1 *q.c;
+	if (q.delta < 0)
 		return (0);
-	t1 = (- b - sqrt(delta)) / (2 * 1);
-	t2 = (- b + sqrt(delta)) / (2 * 1);
-	if (t2 < 0)
+	q.t1 = (- q.b - sqrt(q.delta)) / (2 * 1);
+	q.t2 = (- q.b + sqrt(q.delta)) / (2 * 1);
+	if (q.t2 < 0)
 		return (0);	
-	float	t;
-	if (t1 > 0)
-		t = t1;
+	if (q.t1 > 0)
+		q.t = q.t1;
 	else
-		t = t2;
+		q.t = q.t2;
 	v_copy(p, &ray->origin);
-	v_mult(&ray->direction, t);
+	v_mult(&ray->direction, q.t);
 	v_plus(p, &ray->direction);
 	v_minus(p, &sp->origin);
 	v_copy(n, p);
 	// v_minus(n, &sp->origin);
 	v_normaliz(n);
-	
 	return (1);
 }
 
@@ -111,9 +105,10 @@ void		print_img(t_mlx *mlx)
 			my_mlx_pixel_put(&img, i, j, create_trgb(00, intensite_pixel, intensite_pixel, intensite_pixel));
 		}
 	}
-	mlx_put_image_to_window(mlx->ptr, mlx->win, img.img, 0, 0);
-
-	save_bmp("img_test.bmp", &img, mlx);
+	if (mlx->save)
+		save_bmp("img.bmp", &img, mlx);
+	else
+		mlx_put_image_to_window(mlx->ptr, mlx->win, img.img, 0, 0);
 }
 
 int			key_hook(int keycode, t_mlx *mlx)
