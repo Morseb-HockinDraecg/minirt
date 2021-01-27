@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/27 15:11:52 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/27 15:16:46 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct	s_ray
 {
 	t_coord	origin;
 	t_coord	direction;
+	t_coord	rgb;
 }				t_ray;
 
 typedef struct	s_light

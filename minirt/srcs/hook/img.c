@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 12:09:50 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/27 14:41:01 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/27 15:55:03 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int			has_intersection(t_ray *ray, t_shape *sp, t_coord *p, t_coord *n)
 	return (q.t);
 }
 
-int			scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n, t_coord *rgb)
+int			scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n)
 {
 	t_shape *sp;
 	t_coord	p_tmp;
@@ -46,7 +46,7 @@ int			scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n, t_coord 
 	int		intersection;
 
 	intersection = 0;
-	t_min = 1256654564;
+	t_min = 1E99;
 	while (l)
 	{
 		sp = l->content;
@@ -57,9 +57,7 @@ int			scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n, t_coord 
 				t_min = intersection;
 				*p = p_tmp;
 				*n = n_tmp;
-				rgb->x = sp->rgb.x;
-				rgb->y = sp->rgb.y;
-				rgb->z = sp->rgb.z;
+				ray->rgb = v_copy(sp->rgb);
 			}
 		}
 		l = l->next;
@@ -71,13 +69,13 @@ void		algo_img(t_mlx *mlx, int i, int j, t_ray *ray)
 {
 	t_coord	p;
 	t_coord	n;
-	t_coord	rgb;
 	t_list	*l;
 	float	intensite_pixel;
 
 	l = mlx->sc->shape;
+	v_init(&ray->rgb, 0, 0, 0);
 	intensite_pixel = 0;
-	if (scene_intersection(ray, l, &p, &n, &rgb))
+	if (scene_intersection(ray, l, &p, &n))
 	{
 		mlx->tmp = (v_minus(v_copy(mlx->sc->s.origin), p));
 		if ((intensite_pixel = v_dot(v_normaliz(v_minus(\
@@ -91,8 +89,8 @@ void		algo_img(t_mlx *mlx, int i, int j, t_ray *ray)
 			intensite_pixel = 255;
 		intensite_pixel /= 255;
 	}
-	my_mlx_pixel_put(mlx, i, j, create_trgb(00, rgb.x * intensite_pixel,\
-	rgb.y * intensite_pixel, rgb.z * intensite_pixel));
+	my_mlx_pixel_put(mlx, i, j, create_trgb(00, ray->rgb.x * intensite_pixel,\
+	ray->rgb.y * intensite_pixel, ray->rgb.z * intensite_pixel));
 }
 
 void		print_img(t_mlx *mlx)
