@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:07 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/25 16:18:08 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/27 10:19:57 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,19 @@ int	init_minrt(t_mlx *mlx)
 
 void	set_value_4_pars(t_mlx *mlx)
 {
+	t_scene	*scene;
+	t_list	*lst;
+
+
 	mlx->h = -1;
 	mlx->w = -1;
+	scene = (t_scene *)malloc(sizeof(t_scene));
+	mlx->sc = scene;
 	mlx->sc->l.r = -1;
 	init_coord(&mlx->sc->l.rgb);
 	mlx->save = 0;
-	// mlx->sc->shape = NULL;
+	lst = NULL;
+	mlx->sc->shape = lst;
 }
 
 void	check_mandatories_values(t_mlx *mlx)

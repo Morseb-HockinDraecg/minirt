@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:12 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/25 16:19:30 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/27 08:12:58 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,7 @@ void		ft_parse(char *rt_file, t_mlx *mlx)
 	int		fd;
 	int		ret;
 	char	*line;
-	t_scene	*scene;
 
-	scene = (t_scene *)malloc(sizeof(t_scene));
-	mlx->sc = scene;
 	set_value_4_pars(mlx);
 	if ((fd = open(rt_file, O_RDONLY)) < 0)
 		error_minirt(20);
