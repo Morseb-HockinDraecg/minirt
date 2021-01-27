@@ -44,11 +44,11 @@ unsigned char	*create_bitmap_info_header(t_mlx *mlx, int size)
 	info_header[11] = (unsigned char)(mlx->h >> 24);
 	info_header[12] = (unsigned char)(1);
 	info_header[14] = (unsigned char)(mlx->ptr_img->bits_per_pixel);
-	// info_header[20] = (size) >> 0;
-	// info_header[21] = (size) >> 8;
-	// info_header[22] = (size) >> 16;
-	// info_header[23] = (size) >> 24;
-	(void)size;
+	info_header[20] = (size) >> 0;
+	info_header[21] = (size) >> 8;
+	info_header[22] = (size) >> 16;
+	info_header[23] = (size) >> 24;
+	// (void)size;
 	return (info_header);
 }
 

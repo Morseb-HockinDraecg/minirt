@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:21 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/25 16:41:10 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/26 16:00:37 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,23 @@ int		close_win(t_mlx *mlx)
 }
 
 
-void            my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void            my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 {
     int    *dst;
 
-    dst = data->addr + (y * data->line_length / (data->bits_per_pixel / 8) + x);
+    dst = mlx->ptr_img->addr + ((mlx->h - x - 1) * mlx->ptr_img->line_length / (mlx->ptr_img->bits_per_pixel / 8) + y);
     *(unsigned int*)dst = color;
 }
 
 int			has_intersection(t_ray *ray, t_shape *sp, t_coord *p, t_coord *n)
 {
 	t_quadratic q;
+	t_coord		r_o;
 
-	v_minus(&ray->origin, &sp->origin);
+	r_o = v_minus(v_copy(ray->origin), sp->origin);
 	q.a = 1;
-	q.b = 2.0 * v_dot(&ray->direction, &ray->origin);
-	q.c = v_norm2(&ray->origin) - (sp->rayon) * (sp->rayon);
+	q.b = 2.0 * v_dot(v_copy(ray->direction), r_o);
+	q.c = v_norm2(&r_o) - (sp->rayon) * (sp->rayon);
 	q.delta = q.b * q.b - 4 * 1 *q.c;
 	if (q.delta < 0)
 		return (0);
@@ -47,66 +48,54 @@ int			has_intersection(t_ray *ray, t_shape *sp, t_coord *p, t_coord *n)
 		q.t = q.t1;
 	else
 		q.t = q.t2;
-	v_copy(p, &ray->origin);
-	v_mult(&ray->direction, q.t);
-	v_plus(p, &ray->direction);
-	v_minus(p, &sp->origin);
-	v_copy(n, p);
-	// v_minus(n, &sp->origin);
-	v_normaliz(n);
+	*p = v_plus(v_copy(ray->origin), v_mult(&ray->direction, q.t));
+	*n = v_normaliz(v_minus(v_copy(*p), sp->origin));
 	return (1);
 }
 
 void		print_img(t_mlx *mlx)
 {
-	int i = 0, j = 0;
+	int i = -1;
+	int	j;
 	t_data	img;
 	t_ray	ray;
 	t_coord p, n;
 
-	mlx->ptr_img = &img;
 	img.img = mlx_new_image(mlx->ptr, mlx->w, mlx->h);
 	img.addr = (int *)mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	while (i++ < mlx->w)
+	mlx->ptr_img = &img;
+	while (++i < mlx->h)
 	{
-		v_copy(&mlx->tmp, &mlx->sc->s.origin);
-		j = 0;
-		while (j++ < mlx->h - 1)
+		j = -1;
+		while (++j < mlx->w)
 		{
-			v_init(&ray.direction, i - mlx->w /2, j - mlx->h /2, - mlx->w / 2 * tan(mlx->sc->c.fov / 2));
-			v_normaliz(&ray.direction);
+			v_init(&ray.direction, j - mlx->w / 2, i - mlx->h / 2, - mlx->w / (2 * tan(mlx->sc->c.fov / 2)));
+			ray.direction = v_normaliz(ray.direction);
 			v_init(&ray.origin, 0, 0, 0);
-			// v_init(&p, 0, 0, 0);
-			// v_init(&n, 0, 0, 0);
 			float	intensite_pixel = 0;
-			t_coord tmp;
 			if (has_intersection(&ray, mlx->sc->shape, &p, &n))
 			{
-				v_minus(&mlx->tmp, &p);
-				v_copy(&tmp, &mlx->tmp);
-				v_normaliz(&tmp);
-				// v_minus(&mlx->sc->s.origin, &p);
-				// v_copy(&tmp, &mlx->sc->s.origin);
-				// v_normaliz(&tmp);
+				t_coord tmp;
+				tmp = (v_minus(v_copy(mlx->sc->s.origin), p));
 				float k;
-				k = v_dot(&tmp, &n);
-				// if ((k = v_dot(&tmp, &n)) < 0)
-					k = -k;
-			// printf("%f\n", k);
-				intensite_pixel = mlx->sc->s.r * 10000000000.0 *  k / v_norm2(&mlx->tmp);
-				// intensite_pixel = mlx->sc->s.r * 10000000000.0 *  v_dot(&tmp, &n) / v_norm2(&mlx->tmp);
-				// intensite_pixel *= -1;
-			// printf("%f\n", intensite_pixel);
+				k = v_dot(tmp, n);
+				if ((k = v_dot(v_normaliz(v_minus(v_copy(mlx->sc->s.origin), p)), n)) < 0)
+					k = 0;
+				intensite_pixel = mlx->sc->s.r * 10000000.0 *  k / v_norm2(&tmp);
 				if (intensite_pixel < 0)
 					intensite_pixel = 0;
 				else if (intensite_pixel > 255)
 					intensite_pixel = 255;
+				intensite_pixel /= 255;
 			}
-			my_mlx_pixel_put(&img, i, j, create_trgb(00, intensite_pixel, intensite_pixel, intensite_pixel));
+			my_mlx_pixel_put(mlx, i, j, create_trgb(00, mlx->sc->shape->rgb.x * intensite_pixel, mlx->sc->shape->rgb.y * intensite_pixel, mlx->sc->shape->rgb.z * intensite_pixel));
 		}
 	}
 	if (mlx->save)
+	{
 		save_bmp("img.bmp", &img, mlx);
+		close_win(mlx);
+	}
 	else
 		mlx_put_image_to_window(mlx->ptr, mlx->win, img.img, 0, 0);
 }

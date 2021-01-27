@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 10:38:57 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/25 11:25:43 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/26 10:00:56 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	parse_cylindre(char *line, t_mlx *mlx)
 {
-printf("Hi from cy\n");
+// printf("Hi from cy\n");
 (void)line;
 (void)mlx;
 }
@@ -41,21 +41,21 @@ void	parse_sphere(char *line, t_mlx *mlx)
 
 void	parse_square(char *line, t_mlx *mlx)
 {
-printf("Hi from sq\n");
+// printf("Hi from sq\n");
 (void)line;
 (void)mlx;
 }
 
 void	parse_plane(char *line, t_mlx *mlx)
 {
-printf("Hi from pl\n");
+// printf("Hi from pl\n");
 (void)line;
 (void)mlx;
 }
 
 void	parse_triangle(char *line, t_mlx *mlx)
 {
-printf("Hi from tri\n");
+// printf("Hi from tri\n");
 (void)line;
 (void)mlx;
 }

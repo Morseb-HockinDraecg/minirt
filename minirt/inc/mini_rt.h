@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/25 16:56:22 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/26 15:45:02 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,8 @@ void			check_mandatories_values(t_mlx *mlx);
 t_shape			*init_shape(void);
 
 void			display(t_mlx *mlx);
-int			close_win(t_mlx *mlx);
-void		print_img(t_mlx *mlx);
+int				close_win(t_mlx *mlx);
+void			print_img(t_mlx *mlx);
 
 /*
 **	Parsing
@@ -173,16 +173,14 @@ int				get_b(int trgb);
 /*
 **	Vector
 */
-void			v_copy(t_coord *a, t_coord *b);
-void			v_copy(t_coord *a, t_coord *b);
-void			v_copy(t_coord *a, t_coord *b);
-void			v_normaliz(t_coord *a);
+t_coord			v_copy(t_coord b);
+t_coord			v_normaliz(t_coord a);
 float			v_norm2(t_coord *a);
-float			v_dot(t_coord *a, t_coord *b);
+float			v_dot(t_coord a, t_coord b);
 void			v_div(t_coord *a, t_coord *b);
-void			v_mult(t_coord *a, float b);
-void			v_minus(t_coord *a, t_coord *b);
-void			v_plus(t_coord *a, t_coord *b);
+t_coord			v_mult(t_coord *a, float b);
+t_coord			v_minus(t_coord a, t_coord b);
+t_coord			v_plus(t_coord a, t_coord b);
 void			v_init(t_coord *a, int x, int y, int z);
 
 #endif
