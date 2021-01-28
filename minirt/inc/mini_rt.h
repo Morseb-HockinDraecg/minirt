@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/27 15:16:46 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/28 10:25:07 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "libft.h"
 # include "get_next_line.h"
 # include <math.h>
+# include <limits.h>
 
 /*
 **	Shapes

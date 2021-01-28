@@ -3,6 +3,7 @@
 t_coord	v_copy(t_coord b)
 {
 	t_coord a;
+
 	a.x = b.x;
 	a.y = b.y;
 	a.z = b.z;
@@ -11,7 +12,7 @@ t_coord	v_copy(t_coord b)
 
 t_coord	v_normaliz(t_coord a)
 {
-	float norm;
+	float	norm;
 	t_coord b;
 
 	norm = sqrt(v_norm2(&a));

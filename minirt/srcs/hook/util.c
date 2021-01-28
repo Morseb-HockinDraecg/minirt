@@ -1,14 +1,16 @@
 #include "mini_rt.h"
 
-void            my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
+void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 {
     int    *dst;
 
-    dst = mlx->ptr_img->addr + ((mlx->h - x - 1) * mlx->ptr_img->line_length / (mlx->ptr_img->bits_per_pixel / 8) + y);
+    // dst = mlx->ptr_img->addr + ((mlx->h - x - 1) * mlx->ptr_img->line_length / (mlx->ptr_img->bits_per_pixel / 8) + y);
+	dst = mlx->ptr_img->addr + (y * mlx->ptr_img->line_length + x * (mlx->ptr_img->bits_per_pixel / 8));
+	// dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
     *(unsigned int*)dst = color;
 }
 		
-void		ft_print_img(t_mlx *mlx)
+void	ft_print_img(t_mlx *mlx)
 {
 	if (mlx->save)
 	{

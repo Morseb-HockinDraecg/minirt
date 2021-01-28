@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:12 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/27 08:12:58 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/27 16:04:47 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,6 @@ static void	parse_line_(char *line, t_mlx *mlx)
 
 static void	parse_line(char *line, t_mlx *mlx)
 {
-//
-	// static int i = 0;
-	// printf("|%d|%s\n", i++, line);
-//
 	trim_ws(&line);
 	if (*line == 'R')
 		parse_resolution(++line, mlx);
