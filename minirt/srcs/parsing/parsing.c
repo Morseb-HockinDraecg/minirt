@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:12 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/27 16:04:47 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/29 15:43:21 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ static void	parse_line_(char *line, t_mlx *mlx)
 		if (*(++line) == 'r')
 			parse_triangle(++line, mlx);
 	}
+	else if (*line == '\0' || *line == '#')
+		;
 	else
-	{
 		error_minirt(20);
-	}
 }
 
 static void	parse_line(char *line, t_mlx *mlx)

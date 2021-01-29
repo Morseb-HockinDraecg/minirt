@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:07 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/29 10:03:39 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/29 15:52:54 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,6 @@ void	set_value_4_pars(t_mlx *mlx)
 	mlx->sc->shape = lst;
 }
 
-void	check_mandatories_values(t_mlx *mlx)
-{
-	if (mlx->h < 0 ||
-	mlx->w < 0 ||
-	mlx->sc->l.r < 0 ||
-	mlx->sc->l.rgb.x < 0 ||
-	mlx->sc->l.rgb.y < 0 ||
-	mlx->sc->l.rgb.z < 0)
-	error_parsing(25);
-}
-
 t_shape	*init_shape(void)
 {
 	t_shape	*sh;
@@ -64,7 +53,7 @@ t_shape	*init_shape(void)
 	init_coord(&sh->origin);
 	init_coord(&sh->rgb);
 	init_coord(&sh->vector);
-	init_coord(&sh->point);
+	init_coord(&sh->pt);
 	sh->rayon = 0;
 	sh->hight = 0;
 	return (sh);

@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/29 10:57:41 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/29 16:01:44 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef struct	s_shape
 	float	rayon;
 	float	hight;
 	t_coord	vector;
-	t_coord	point;
+	t_coord	pt;
 
 }				t_shape;
 
@@ -137,7 +137,6 @@ int				mouse_hook(int z, int x, int y);
 
 int				init_minrt(t_mlx *mlx);
 void			set_value_4_pars(t_mlx *mlx);
-void			check_mandatories_values(t_mlx *mlx);
 t_shape			*init_shape(void);
 
 void			display(t_mlx *mlx);
@@ -153,6 +152,9 @@ float			trim_float(char **line);
 void			trim_coord(char **line, t_coord *coord);
 int				check_rgb(t_coord *coord);
 int				check_orientation_3d(t_coord *coord);
+void			check_mandatories_values(t_mlx *mlx);
+int				check_r(t_mlx *mlx);
+int				check_a(t_mlx *mlx);
 void			parse_resolution(char *line, t_mlx *mlx);
 void			parse_light(char *line, t_mlx *mlx);
 void			parse_cam(char *line, t_mlx *mlx);
