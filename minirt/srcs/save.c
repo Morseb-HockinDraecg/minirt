@@ -1,13 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   save.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/29 09:21:33 by smorel            #+#    #+#             */
+/*   Updated: 2021/01/29 09:23:40 by smorel           ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mini_rt.h"
 
 unsigned char	*create_bitmap_file_header(int file_size)
 {
 	static unsigned char	file_header[] = {
-		0, 0,     /// signature
-		0, 0, 0, 0, /// image file size in bytes
-		0, 0, 0, 0, /// reserved
-		0, 0, 0, 0, /// start of pixel array
+		0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0,
 	};
+
 	file_header[0] = (unsigned char)('B');
 	file_header[1] = (unsigned char)('M');
 	file_header[2] = (unsigned char)(file_size);
@@ -18,21 +31,21 @@ unsigned char	*create_bitmap_file_header(int file_size)
 	return (file_header);
 }
 
-unsigned char	*create_bitmap_info_header(t_mlx *mlx, int size)
+unsigned char	*create_bitmap_info_header(t_mlx *mlx)
 {
 	static unsigned char info_header[] = {
-		0, 0, 0, 0, /// header size
-		0, 0, 0, 0, /// image width
-		0, 0, 0, 0, /// image height
-		0, 0,     /// number of color planes
-		0, 0,     /// bits per pixel
-		0, 0, 0, 0, /// compression
-		0, 0, 0, 0, /// image size
-		0, 0, 0, 0, /// horizontal resolution
-		0, 0, 0, 0, /// vertical resolution
-		0, 0, 0, 0, /// colors in color table
-		0, 0, 0, 0, /// important color count
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		0, 0,
+		0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
 	};
+
 	info_header[0] = (unsigned char)(40);
 	info_header[4] = (unsigned char)(mlx->w >> 0);
 	info_header[5] = (unsigned char)(mlx->w >> 8);
@@ -44,21 +57,26 @@ unsigned char	*create_bitmap_info_header(t_mlx *mlx, int size)
 	info_header[11] = (unsigned char)(mlx->h >> 24);
 	info_header[12] = (unsigned char)(1);
 	info_header[14] = (unsigned char)(mlx->ptr_img->bits_per_pixel);
-	info_header[20] = (size) >> 0;
-	info_header[21] = (size) >> 8;
-	info_header[22] = (size) >> 16;
-	info_header[23] = (size) >> 24;
-	// (void)size;
 	return (info_header);
 }
 
-void			write_img(int fd, t_data *img, t_mlx *mlx, int y)
+void			write_img(int fd, t_mlx *mlx)
 {
-	while (y)
-		write(fd, img->addr + (y-- * img->line_length / (img->bits_per_pixel / 8)), 4 * mlx->w);
+	int		x;
+	int		y;
+
+	x = -1;
+	while (++x < mlx->h)
+	{
+		y = -1;
+		while (++y < mlx->w)
+			write(fd, mlx->ptr_img->addr + ((mlx->h - x - 1) *\
+			mlx->ptr_img->line_length / (mlx->ptr_img->bits_per_pixel / 8) + y)\
+			, mlx->ptr_img->bits_per_pixel / 8);
+	}
 }
 
-void			save_bmp(const char *filename, t_data *img, t_mlx *mlx)
+void			save_bmp(const char *filename, t_mlx *mlx)
 {
 	int		fd;
 	int		img_size;
@@ -69,8 +87,8 @@ void			save_bmp(const char *filename, t_data *img, t_mlx *mlx)
 	close(open(filename, O_RDONLY | O_CREAT, S_IRWXU));
 	fd = open(filename, O_RDWR);
 	write(fd, create_bitmap_file_header(file_size), 14);
-	write(fd, create_bitmap_info_header(mlx, img_size), 40);
-	write_img(fd, img, mlx, mlx->h);
+	write(fd, create_bitmap_info_header(mlx), 40);
+	write_img(fd, mlx);
 	close(fd);
 	ft_putstr_fd("Image generated!!", 1);
 }

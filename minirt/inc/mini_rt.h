@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/28 10:25:07 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/29 09:16:08 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ typedef struct	s_quadratic
 	float	t;
 }				t_quadratic;
 
-void			save_bmp(const char *filename, t_data *img, t_mlx *mlx);
+void			save_bmp(const char *filename, t_mlx *mlx);
 /*
 **	Error
 */
