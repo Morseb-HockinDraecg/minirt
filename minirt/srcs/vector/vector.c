@@ -71,6 +71,16 @@ t_coord	v_plus(t_coord a, t_coord b)
 	return (c);
 }
 
+// t_coord	v_add(t_coord a, float b)
+// {
+// 	t_coord	c;
+
+// 	c.x = a.x + b;
+// 	c.y = a.y + b;
+// 	c.z = a.z + b;
+// 	return (c);
+// }
+
 void	v_init(t_coord *a, int x, int y, int z)
 {
 	a->x = x;
