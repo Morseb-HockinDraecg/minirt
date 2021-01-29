@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:12 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/20 16:25:56 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/01/29 17:23:11 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		trim_coord(char **line, t_coord *coord)
 	if (*(*line)++ == ',')
 		;
 	else
-		error_parsing(24);
+		error_parsing(20);
 	sign = sign_coord(line);
 	coord->z = sign * trim_float(line);
 }
