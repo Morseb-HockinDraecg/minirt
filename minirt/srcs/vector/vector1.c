@@ -1,33 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_parsing.c                                    :+:      :+:    :+:   */
+/*   vector1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/20 10:29:36 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/01 07:33:16 by smorel           ###   ########lyon.fr   */
+/*   Created: 2021/02/01 07:31:13 by smorel            #+#    #+#             */
+/*   Updated: 2021/02/01 07:31:39 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-static void	error_parsing_1(void)
+t_coord	v_mult(t_coord *a, float b)
 {
-	perror("error 21");
+	t_coord	c;
+
+	c.x = a->x * b;
+	c.y = a->y * b;
+	c.z = a->z * b;
+	return (c);
 }
 
-static void	error_parsing_0(void)
+t_coord	v_minus(t_coord a, t_coord b)
 {
-	perror("error 20");
+	t_coord	c;
+
+	c.x = a.x - b.x;
+	c.y = a.y - b.y;
+	c.z = a.z - b.z;
+	return (c);
 }
 
-void		error_parsing(int i)
+t_coord	v_plus(t_coord a, t_coord b)
 {
-	i %= 10;
-	if (i == 0)
-		error_parsing_0();
-	else if (i == 0)
-		error_parsing_1();
-	exit(-i);
+	t_coord	c;
+
+	c.x = a.x + b.x;
+	c.y = a.y + b.y;
+	c.z = a.z + b.z;
+	return (c);
+}
+
+void	v_init(t_coord *a, int x, int y, int z)
+{
+	a->x = x;
+	a->y = y;
+	a->z = z;
 }

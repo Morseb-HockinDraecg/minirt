@@ -6,13 +6,13 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 12:09:50 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/29 15:40:05 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/01 07:43:40 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-float			has_intersection(t_ray *ray, t_shape *sp, t_coord *p, t_coord *n)
+float		has_intersection(t_ray *ray, t_shape *sp, t_coord *p, t_coord *n)
 {
 	t_quadratic q;
 	t_coord		r_o;
@@ -37,7 +37,7 @@ float			has_intersection(t_ray *ray, t_shape *sp, t_coord *p, t_coord *n)
 	return (q.t);
 }
 
-float			scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n)
+float		scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n)
 {
 	t_shape *sp;
 	t_coord	p_local;
@@ -70,43 +70,14 @@ void		shadow(t_mlx *mlx, t_ray *ray, t_coord *p, t_coord *n)
 	t_coord p_shade;
 	t_coord n_shade;
 	float	shade;
+	float	d_light2;
 
 	shadow.origin = v_plus(v_copy(*p), v_mult(n, 0.1));
 	shadow.direction = v_normaliz(v_copy(mlx->tmp));
 	shade = scene_intersection(&shadow, mlx->sc->shape, &p_shade, &n_shade);
-	float d_light2 = v_norm2(&mlx->tmp); 
+	d_light2 = v_norm2(&mlx->tmp);
 	if (shade && shade * shade < d_light2)
 		v_init(&ray->rgb, 0, 0, 0);
-}
-
-/*
-** i_pixel = intensite pixel
-*/
-
-void		get_color(t_mlx *mlx, int i, int j, t_ray *ray)
-{
-	t_coord	p;
-	t_coord	n;
-	float	i_pixel;
-
-	v_init(&ray->rgb, 0, 0, 0);
-	i_pixel = 0;
-	if (scene_intersection(ray, mlx->sc->shape, &p, &n))
-	{
-		mlx->tmp = (v_minus(v_copy(mlx->sc->s.origin), p));
-		shadow(mlx, ray, &p, &n);
-		if ((i_pixel = v_dot(v_normaliz(v_minus(v_copy(mlx->sc->s.origin), p)), n)) < 0)
-			i_pixel = 0;
-		i_pixel = (mlx->sc->s.r / M_PI) * 10000000.0 * i_pixel /v_norm2(&mlx->tmp);
-		if (i_pixel < 0)
-			i_pixel = 0;
-		else if (i_pixel > 255)
-			i_pixel = 255;
-		i_pixel /= 255;
-		i_pixel = pow(i_pixel, 1/2.2); //correction gamma
-	}
-	my_mlx_pixel_put(mlx, i, j, create_trgb(00, ray->rgb.x * i_pixel,\
-	ray->rgb.y * i_pixel, ray->rgb.z * i_pixel));
 }
 
 void		print_img(t_mlx *mlx)

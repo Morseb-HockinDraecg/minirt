@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:07 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/29 15:52:54 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/01 07:29:13 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	init_coord(t_coord *c)
 	c->z = -1;
 }
 
-int	init_minrt(t_mlx *mlx)
+int			init_minrt(t_mlx *mlx)
 {
 	if (!(mlx->ptr = mlx_init()))
 		return (error_minirt(98));
@@ -28,11 +28,10 @@ int	init_minrt(t_mlx *mlx)
 	return (-1);
 }
 
-void	set_value_4_pars(t_mlx *mlx)
+void		set_value_4_pars(t_mlx *mlx)
 {
 	t_scene	*scene;
 	t_list	*lst;
-
 
 	mlx->h = -1;
 	mlx->w = -1;
@@ -45,7 +44,7 @@ void	set_value_4_pars(t_mlx *mlx)
 	mlx->sc->shape = lst;
 }
 
-t_shape	*init_shape(void)
+t_shape		*init_shape(void)
 {
 	t_shape	*sh;
 

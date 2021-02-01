@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/29 16:01:44 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/01 07:39:45 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ int				create_trgb(int t, int r, int g, int b);
 int				get_r(int trgb);
 int				get_g(int trgb);
 int				get_b(int trgb);
+void			get_color(t_mlx *mlx, int i, int j, t_ray *ray);
 
 /*
 **	Vector

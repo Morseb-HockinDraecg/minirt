@@ -1,13 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   util.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/01 07:35:43 by smorel            #+#    #+#             */
+/*   Updated: 2021/02/01 07:38:49 by smorel           ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mini_rt.h"
 
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 {
-    int    *dst;
+	int	*dst;
 
-    dst = mlx->ptr_img->addr + ((mlx->h - x - 1) * mlx->ptr_img->line_length / (mlx->ptr_img->bits_per_pixel / 8) + y);
-    *(unsigned int*)dst = color;
+	dst = mlx->ptr_img->addr + ((mlx->h - x - 1) * mlx->ptr_img->line_length\
+	/ (mlx->ptr_img->bits_per_pixel / 8) + y);
+	*(unsigned int*)dst = color;
 }
-		
+
 void	ft_print_img(t_mlx *mlx)
 {
 	if (mlx->save)
