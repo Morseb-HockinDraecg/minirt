@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 10:03:53 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/29 16:01:23 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/01 12:19:11 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@ void	parse_resolution(char *line, t_mlx *mlx)
 	trim_ws(&line);
 	if (!ft_isdigit(*line))
 		error_minirt(22);
-	mlx->w = trim_int(&line);
+	if ((mlx->w = trim_int(&line)) > 2560)
+		mlx->w = 2560;
 	trim_ws(&line);
-	mlx->h = trim_int(&line);
+	if ((mlx->h = trim_int(&line)) > 1395)
+		mlx->h = 1395;
 }
 
 void	parse_light(char *line, t_mlx *mlx)
@@ -45,23 +47,27 @@ void	parse_light(char *line, t_mlx *mlx)
 
 void	parse_cam(char *line, t_mlx *mlx)
 {
+	t_cam *cam;
+
+	cam = init_cam();
 	if (!ft_isspace(*line++) && !ft_isdigit(*line))
 		error_minirt(22);
 	trim_ws(&line);
 	if (!ft_isdigit(*line) && *line != '-')
 		error_minirt(22);
-	trim_coord(&line, &mlx->sc->c.origin);
+	trim_coord(&line, &cam->origin);
 	trim_ws(&line);
 	if (!ft_isdigit(*line))
 		error_minirt(22);
-	trim_coord(&line, &mlx->sc->c.vector);
-	if (!check_orientation_3d(&mlx->sc->c.vector))
+	trim_coord(&line, &cam->vector);
+	if (!check_orientation_3d(&cam->vector))
 		error_minirt(20);
 	trim_ws(&line);
-	mlx->sc->c.fov = trim_float(&line);
-	if (mlx->sc->c.fov < 0 || mlx->sc->c.fov > 180)
+	cam->fov = trim_float(&line);
+	if (cam->fov < 0 || cam->fov > 180)
 		error_minirt(23);
-	mlx->sc->c.fov *= M_PI / 180;
+	cam->fov *= M_PI / 180;
+	ft_lstadd_back(&mlx->sc->c, ft_lstnew(cam));
 }
 
 void	parse_spot(char *line, t_mlx *mlx)

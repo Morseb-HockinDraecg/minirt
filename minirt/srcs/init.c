@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:07 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/01 07:29:13 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/01 15:56:11 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int			init_minrt(t_mlx *mlx)
 void		set_value_4_pars(t_mlx *mlx)
 {
 	t_scene	*scene;
-	t_list	*lst;
 
 	mlx->h = -1;
 	mlx->w = -1;
@@ -40,8 +39,8 @@ void		set_value_4_pars(t_mlx *mlx)
 	mlx->sc->l.r = -1;
 	init_coord(&mlx->sc->l.rgb);
 	mlx->save = 0;
-	lst = NULL;
-	mlx->sc->shape = lst;
+	mlx->sc->shape = NULL;
+	mlx->sc->c = NULL;
 }
 
 t_shape		*init_shape(void)
@@ -53,7 +52,18 @@ t_shape		*init_shape(void)
 	init_coord(&sh->rgb);
 	init_coord(&sh->vector);
 	init_coord(&sh->pt);
-	sh->rayon = 0;
-	sh->hight = 0;
+	sh->rayon = -1;
+	sh->hight = -1;
 	return (sh);
+}
+
+t_cam		*init_cam(void)
+{
+	t_cam	*cam;
+
+	cam = (t_cam *)malloc(sizeof(t_cam));
+	init_coord(&cam->origin);
+	init_coord(&cam->vector);
+	cam->fov = 0;
+	return (cam);
 }

@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/01 07:39:45 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/01 14:09:40 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,6 @@ typedef struct	s_ray
 	t_coord	rgb;
 }				t_ray;
 
-typedef struct	s_light
-{
-	float	r;
-	// t_coord	ratio;
-	t_coord	rgb;
-}				t_light;
-
 typedef struct	s_cam
 {
 	t_coord	origin;
@@ -60,7 +53,6 @@ typedef struct	s_spot
 {
 	t_coord	origin;
 	float	r;
-	// t_coord	ratio;
 	t_coord	rgb;
 }				t_spot;
 
@@ -78,8 +70,8 @@ typedef struct	s_shape
 
 typedef struct	s_scene
 {
-	t_light	l;
-	t_cam	c;
+	t_spot	l;
+	t_list	*c;
 	t_spot	s;
 	t_list	*shape;
 }				t_scene;
@@ -134,10 +126,14 @@ void			error_parsing(int i);
 int				key_hook(int keycode, t_mlx *mlx);
 int				mouse_hook(int z, int x, int y);
 // int             mouse_hook(int keycode, t_mlx *mlx);
+void			shadow(t_mlx *mlx, t_ray *ray, t_coord *p, t_coord *n);
+float			scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n);
+void	list_obj(t_mlx *mlx);
 
 int				init_minrt(t_mlx *mlx);
 void			set_value_4_pars(t_mlx *mlx);
 t_shape			*init_shape(void);
+t_cam			*init_cam(void);
 
 void			display(t_mlx *mlx);
 int				close_win(t_mlx *mlx);
@@ -191,5 +187,6 @@ void			v_init(t_coord *a, int x, int y, int z);
 void		my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 void		ft_print_img(t_mlx *mlx);
 void		print_img(t_mlx *mlx);
+void	display_scene(t_mlx *mlx);
 
 #endif

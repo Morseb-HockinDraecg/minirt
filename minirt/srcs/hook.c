@@ -1,33 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/01 07:35:43 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/01 07:38:49 by smorel           ###   ########lyon.fr   */
+/*   Created: 2021/01/12 16:30:21 by smorel            #+#    #+#             */
+/*   Updated: 2021/02/01 16:20:49 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
+int		close_win(t_mlx *mlx)
 {
-	int	*dst;
-
-	dst = mlx->ptr_img->addr + ((mlx->h - x - 1) * mlx->ptr_img->line_length\
-	/ (mlx->ptr_img->bits_per_pixel / 8) + y);
-	*(unsigned int*)dst = color;
+	mlx_destroy_window(mlx->ptr, mlx->win);
+	//FREE ALL !!
+	exit(0);
 }
 
-void	ft_print_img(t_mlx *mlx)
+void	ft_tab(void)
 {
-	if (mlx->save)
-	{
-		save_bmp("img.bmp", mlx);
+	printf("tab\n");
+}
+
+int		key_hook(int keycode, t_mlx *mlx)
+{
+printf("%d\n", keycode);
+	if (keycode == 53)
 		close_win(mlx);
-	}
-	else
-		mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->ptr_img->img, 0, 0);
+	else if (keycode == 37)
+		list_obj(mlx);
+	else if (keycode == 48)
+		ft_tab();
+	// else if (keycode == 0)
+	// 	printf("coucou\n");
+	// else
+	// {
+	// }
+	return (keycode);
 }

@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 10:38:57 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/29 15:52:15 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/01 12:20:25 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	parse_cylindre(char *line, t_mlx *mlx)
 	trim_ws(&line);
 	trim_coord(&line, &cy->rgb);
 	check_rgb(&cy->rgb);
-	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(&(*cy)));
+	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(cy));
 }
 
 void	parse_sphere(char *line, t_mlx *mlx)
@@ -73,7 +73,7 @@ void	parse_square(char *line, t_mlx *mlx)
 	trim_ws(&line);
 	trim_coord(&line, &sq->rgb);
 	check_rgb(&sq->rgb);
-	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(&(*sq)));
+	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(sq));
 }
 
 void	parse_plane(char *line, t_mlx *mlx)
@@ -91,7 +91,7 @@ void	parse_plane(char *line, t_mlx *mlx)
 	trim_ws(&line);
 	trim_coord(&line, &pl->rgb);
 	check_rgb(&pl->rgb);
-	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(&(*pl)));
+	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(pl));
 }
 
 void	parse_triangle(char *line, t_mlx *mlx)
@@ -111,5 +111,5 @@ void	parse_triangle(char *line, t_mlx *mlx)
 	trim_ws(&line);
 	trim_coord(&line, &tr->rgb);
 	check_rgb(&tr->rgb);
-	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(&(*tr)));
+	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(tr));
 }
