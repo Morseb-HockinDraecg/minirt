@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/02 11:40:19 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/02 15:54:06 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ t_cam			*init_cam(void);
 */
 void			ft_parse(char *rt_file, t_mlx *mlx);
 void			ft_parse_from_term(t_mlx *mlx);
+void			ft_parse_from_term_choice(t_mlx *mlx);
 void			trim_ws(char **line);
 int				trim_int(char **line);
 float			trim_float(char **line);

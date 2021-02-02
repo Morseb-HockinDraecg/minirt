@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 11:02:34 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/02 11:32:52 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/02 12:20:48 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ float		triangle_intersection(t_ray *ray, t_shape *tr, t_coord *p, t_coord *n)
 	detm = (v_norm2(&q.u) * v_norm2(&q.v)) - (v_dot(q.u, q.v) * v_dot(q.u, q.v));
 	q.b = (v_dot(q.w, q.u) * v_norm2(&q.v)) - (v_dot(q.w, q.v) * v_dot(q.u, q.v));
 	q.b /= detm;
-	q.c = (v_norm2(&q.u) * v_dot(q.w, q.v)) - (v_dot(q.u, q.v) * v_dot(q.w, q.v));
+	q.c = (v_norm2(&q.u) * v_dot(q.w, q.v)) - (v_dot(q.u, q.v) * v_dot(q.w, q.u));
 	q.c /= detm;
 	q.a = 1 - q.b - q.c;
 	if (q.a < 0 || q.a > 1 || q.b < 0 || q.b > 1 || q.c < 0 || q.c > 1)

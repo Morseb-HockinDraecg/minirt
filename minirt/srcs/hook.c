@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:21 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/02 12:06:49 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/02 16:11:50 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ int			close_win(t_mlx *mlx)
 static void	ft_tab(t_mlx *mlx)
 {
 	list_obj(mlx);
+	// printf("select id number to change the object\n");
+	// ft_parse_from_term_choice(mlx);
 	ft_parse_from_term(mlx);
-	printf("working...\n");
 	list_obj(mlx);
 }
 
