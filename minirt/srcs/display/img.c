@@ -6,36 +6,11 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 12:09:50 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/01 16:16:26 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/02 11:12:09 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
-
-float		sphere_intersection(t_ray *ray, t_shape *sp, t_coord *p, t_coord *n)
-{
-	t_quadratic q;
-	t_coord		r_o;
-
-	r_o = v_minus(v_copy(ray->origin), sp->origin);
-	q.a = 1;
-	q.b = 2.0 * v_dot(v_copy(ray->direction), r_o);
-	q.c = v_norm2(&r_o) - (sp->rayon) * (sp->rayon);
-	q.delta = q.b * q.b - 4 * q.a * q.c;
-	if (q.delta < 0)
-		return (0);
-	q.t1 = (-q.b - sqrt(q.delta)) / (2 * q.a);
-	q.t2 = (-q.b + sqrt(q.delta)) / (2 * q.a);
-	if (q.t2 < 0)
-		return (0);
-	if (q.t1 > 0)
-		q.t = q.t1;
-	else
-		q.t = q.t2;
-	*p = v_plus(v_copy(ray->origin), v_mult(&ray->direction, q.t));
-	*n = v_normaliz(v_minus(v_copy(*p), sp->origin));
-	return (q.t);
-}
 
 float		scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n)
 {
@@ -50,14 +25,16 @@ float		scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n)
 	{
 		sh = l->content;
 		if (sh->id == 'p')
-			if ((intersection = sphere_intersection(ray, sh, &p_local, &n_local)))
-				if (intersection < t_min)
-				{
-					t_min = intersection;
-					*p = p_local;
-					*n = n_local;
-					ray->rgb = v_copy(sh->rgb);
-				}
+			intersection = sphere_intersection(ray, sh, &p_local, &n_local);
+		else if (sh->id == 'r')
+			intersection = triangle_intersection(ray, sh, &p_local, &n_local);
+		if (intersection < t_min && intersection)
+		{
+			t_min = intersection;
+			*p = p_local;
+			*n = n_local;
+			ray->rgb = v_copy(sh->rgb);
+		}
 		l = l->next;
 	}
 	if (t_min == INT_MAX)
@@ -116,5 +93,5 @@ void		print_img(t_mlx *mlx)
 			get_color(mlx, i, j, &ray);
 		}
 	}
-	ft_print_img(mlx);
+	display_or_save_img(mlx);
 }

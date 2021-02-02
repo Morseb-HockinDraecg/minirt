@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/01 14:09:40 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/02 11:40:19 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,16 @@ typedef struct	s_quadratic
 	float	t1;
 	float	t2;
 	float	t;
+	t_coord	u;
+	t_coord	v;
+	t_coord	w;
 }				t_quadratic;
 
+/*
+**	to sort
+*/
 void			save_bmp(const char *filename, t_mlx *mlx);
+
 /*
 **	Error
 */
@@ -124,24 +131,35 @@ void			error_parsing(int i);
 **	Hook
 */
 int				key_hook(int keycode, t_mlx *mlx);
-int				mouse_hook(int z, int x, int y);
-// int             mouse_hook(int keycode, t_mlx *mlx);
-void			shadow(t_mlx *mlx, t_ray *ray, t_coord *p, t_coord *n);
-float			scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n);
-void	list_obj(t_mlx *mlx);
+int				close_win(t_mlx *mlx);
 
+/*
+**	Display
+*/
+void			shadow(t_mlx *mlx, t_ray *ray, t_coord *p, t_coord *n);
+void			display(t_mlx *mlx);
+void			display_scene(t_mlx *mlx);
+void			my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
+void			print_img(t_mlx *mlx);
+void			display_or_save_img(t_mlx *mlx);
+float			scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n);
+float			sphere_intersection(t_ray *ray, t_shape *sp, t_coord *p, t_coord *n);
+float			triangle_intersection(t_ray *ray, t_shape *tr, t_coord *p, t_coord *n);
+void			list_obj(t_mlx *mlx);
+
+/*
+**	Init
+*/
 int				init_minrt(t_mlx *mlx);
 void			set_value_4_pars(t_mlx *mlx);
 t_shape			*init_shape(void);
 t_cam			*init_cam(void);
 
-void			display(t_mlx *mlx);
-int				close_win(t_mlx *mlx);
-
 /*
 **	Parsing
 */
 void			ft_parse(char *rt_file, t_mlx *mlx);
+void			ft_parse_from_term(t_mlx *mlx);
 void			trim_ws(char **line);
 int				trim_int(char **line);
 float			trim_float(char **line);
@@ -181,12 +199,7 @@ void			v_div(t_coord *a, t_coord *b);
 t_coord			v_mult(t_coord *a, float b);
 t_coord			v_minus(t_coord a, t_coord b);
 t_coord			v_plus(t_coord a, t_coord b);
-// t_coord			v_add(t_coord a, float b);
+t_coord			v_cross(t_coord a, t_coord b);
 void			v_init(t_coord *a, int x, int y, int z);
-
-void		my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
-void		ft_print_img(t_mlx *mlx);
-void		print_img(t_mlx *mlx);
-void	display_scene(t_mlx *mlx);
 
 #endif

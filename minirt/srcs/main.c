@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:02 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/01 14:11:09 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/02 08:03:35 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	loop_minirt(t_mlx *mlx)
 {
-	float	value;
+	// float	value;
 
-	value = 0;
+	// value = 0;
 	// value = 10 * value + mlx_hook(mlx->win, 2, 1L << 0, key_hook, mlx);
 	mlx_hook(mlx->win, 2, 1L << 0, key_hook, mlx);
 	mlx_hook(mlx->win, 17, 0, close_win, mlx);

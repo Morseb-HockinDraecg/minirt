@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:12 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/29 17:17:17 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/02 12:01:52 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,15 @@ void		ft_parse(char *rt_file, t_mlx *mlx)
 	}
 	check_mandatories_values(mlx);
 	init_minrt(mlx);
+}
+
+void		ft_parse_from_term(t_mlx *mlx)
+{
+	char	*line;
+
+	if (get_next_line(0, &line) < 0)
+		error_minirt(21);
+	parse_line(line, mlx);
+	free(line);
+	display_scene(mlx);
 }

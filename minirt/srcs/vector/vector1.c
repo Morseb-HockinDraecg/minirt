@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 07:31:13 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/01 07:31:39 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/02 09:24:19 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,13 @@ void	v_init(t_coord *a, int x, int y, int z)
 	a->x = x;
 	a->y = y;
 	a->z = z;
+}
+
+void	v_div(t_coord *a, t_coord *b)
+{
+	// a->x /= b;
+	// a->y /= b;
+	// a->z /= b;
+	(void)a;
+	(void)b;
 }
