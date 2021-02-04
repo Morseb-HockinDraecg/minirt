@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/04 13:07:26 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/04 16:45:48 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,6 @@ t_coord			v_mult(t_coord *a, float b);
 t_coord			v_minus(t_coord a, t_coord b);
 t_coord			v_plus(t_coord a, t_coord b);
 t_coord			v_cross(t_coord a, t_coord b);
-void			v_init(t_coord *a, int x, int y, int z);
+void			v_init(t_coord *a, float x, float y, float z);
 
 #endif
