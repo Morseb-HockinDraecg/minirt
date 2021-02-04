@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 12:09:50 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/02 11:12:09 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/04 10:17:05 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ float		scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n)
 			intersection = sphere_intersection(ray, sh, &p_local, &n_local);
 		else if (sh->id == 'r')
 			intersection = triangle_intersection(ray, sh, &p_local, &n_local);
+		else if (sh->id == 'l')
+			intersection = plane_intersection(ray, sh, &p_local, &n_local);
+		else if (sh->id == 'q')
+			intersection = square_intersection(ray, sh, &p_local, &n_local);
 		if (intersection < t_min && intersection)
 		{
 			t_min = intersection;

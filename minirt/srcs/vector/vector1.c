@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 07:31:13 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/02 09:24:19 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/04 11:35:04 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,16 @@ t_coord	v_mult(t_coord *a, float b)
 	c.x = a->x * b;
 	c.y = a->y * b;
 	c.z = a->z * b;
+	return (c);
+}
+
+t_coord	v_multt(t_coord a, t_coord b)
+{
+	t_coord	c;
+
+	c.x = a.x * b.x;
+	c.y = a.y * b.y;
+	c.z = a.z * b.z;
 	return (c);
 }
 

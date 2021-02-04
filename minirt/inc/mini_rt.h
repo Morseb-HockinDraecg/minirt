@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/02 15:54:06 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/04 13:07:26 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ typedef struct	s_quadratic
 **	to sort
 */
 void			save_bmp(const char *filename, t_mlx *mlx);
+t_coord	v_multt(t_coord a, t_coord b);
 
 /*
 **	Error
@@ -145,6 +146,8 @@ void			display_or_save_img(t_mlx *mlx);
 float			scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n);
 float			sphere_intersection(t_ray *ray, t_shape *sp, t_coord *p, t_coord *n);
 float			triangle_intersection(t_ray *ray, t_shape *tr, t_coord *p, t_coord *n);
+float			plane_intersection(t_ray *ray, t_shape *tr, t_coord *p, t_coord *n);
+float			square_intersection(t_ray *ray, t_shape *pl, t_coord *p, t_coord *n);
 void			list_obj(t_mlx *mlx);
 
 /*
