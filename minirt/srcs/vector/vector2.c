@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 07:31:26 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/02 09:56:44 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/05 07:26:42 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ t_coord	v_normaliz(t_coord a)
 	float	norm;
 	t_coord b;
 
-	norm = sqrt(v_norm2(&a));
+	norm = sqrt(v_n2(&a));
 	b.x = a.x / norm;
 	b.y = a.y / norm;
 	b.z = a.z / norm;
 	return (b);
 }
 
-float	v_norm2(t_coord *a)
+float	v_n2(t_coord *a)
 {
 	return (a->x * a->x + a->y * a->y + a->z * a->z);
 }

@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:07 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/01 15:56:11 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/05 09:12:55 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,6 @@ static void	init_coord(t_coord *c)
 	c->x = -1;
 	c->y = -1;
 	c->z = -1;
-}
-
-int			init_minrt(t_mlx *mlx)
-{
-	if (!(mlx->ptr = mlx_init()))
-		return (error_minirt(98));
-	if (!(mlx->win = mlx_new_window(mlx->ptr, mlx->w, mlx->h, "miniRT")))
-		return (error_minirt(99));
-	return (-1);
 }
 
 void		set_value_4_pars(t_mlx *mlx)
@@ -41,6 +32,7 @@ void		set_value_4_pars(t_mlx *mlx)
 	mlx->save = 0;
 	mlx->sc->shape = NULL;
 	mlx->sc->c = NULL;
+	mlx->sc->s = NULL;
 }
 
 t_shape		*init_shape(void)
@@ -52,7 +44,7 @@ t_shape		*init_shape(void)
 	init_coord(&sh->rgb);
 	init_coord(&sh->vector);
 	init_coord(&sh->pt);
-	sh->rayon = -1;
+	sh->r = -1;
 	sh->hight = -1;
 	return (sh);
 }
@@ -66,4 +58,15 @@ t_cam		*init_cam(void)
 	init_coord(&cam->vector);
 	cam->fov = 0;
 	return (cam);
+}
+
+t_spot		*init_spot(void)
+{
+	t_spot	*s;
+
+	s = (t_spot *)malloc(sizeof(t_spot));
+	init_coord(&s->origin);
+	init_coord(&s->rgb);
+	s->r = 0;
+	return (s);
 }

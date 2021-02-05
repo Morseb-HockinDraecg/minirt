@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 07:29:27 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/02 09:57:10 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/05 10:59:52 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,22 @@ void	get_color(t_mlx *mlx, int i, int j, t_ray *ray)
 	t_coord	p;
 	t_coord	n;
 	float	i_pixel;
+	t_list	*spots;
+	t_spot	*s;
 
+	spots = mlx->sc->s;
+	s = spots->content;
 	v_init(&ray->rgb, 0, 0, 0);
 	i_pixel = 0;
 	if (scene_intersection(ray, mlx->sc->shape, &p, &n))
 	{
-		mlx->tmp = (v_minus(v_copy(mlx->sc->s.origin), p));
+		mlx->tmp = (v_sub(v_copy(s->origin), p));
 		shadow(mlx, ray, &p, &n);
-		if ((i_pixel = v_dot(v_normaliz(v_minus(v_copy(mlx->sc->s.origin)\
+		if ((i_pixel = v_dot(v_normaliz(v_sub(v_copy(s->origin)\
 		, p)), n)) < 0)
 			i_pixel = 0;
-		i_pixel = (mlx->sc->s.r / M_PI) * 10000000.0 * i_pixel\
-		/ v_norm2(&mlx->tmp);
+		i_pixel = (s->r / M_PI) * 10000000.0 * i_pixel\
+		/ v_n2(&mlx->tmp);
 		if (i_pixel < 0)
 			i_pixel = 0;
 		else if (i_pixel > 255)

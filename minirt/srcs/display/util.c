@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 07:35:43 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/02 12:05:14 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/05 09:09:49 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static void	display_msg(void)
 {
 	printf("Salut a toi correcteur !\n");
 	printf("La scene que tu as mis en param vient d'etre generee !\n");
-	printf("Si tu veux voir les objets que tu as mis a l'ecran ");
-	printf("press \"l\" (comme list) une fois que tu es sur la ");
-	printf("fenetre de minilibx.\nL'id : rang + type\n");
+	printf("l = lst light\n");
+	printf("o = lst obj \n");
+	printf("\n");
 }
 
 void		display_scene(t_mlx *mlx)

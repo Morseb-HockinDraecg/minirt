@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/04 16:45:48 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/05 09:15:23 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct	s_cam
 
 typedef struct	s_spot
 {
+	char	id;
 	t_coord	origin;
 	float	r;
 	t_coord	rgb;
@@ -61,7 +62,7 @@ typedef struct	s_shape
 	char	id;
 	t_coord	origin;
 	t_coord	rgb;
-	float	rayon;
+	float	r;
 	float	hight;
 	t_coord	vector;
 	t_coord	pt;
@@ -72,7 +73,7 @@ typedef struct	s_scene
 {
 	t_spot	l;
 	t_list	*c;
-	t_spot	s;
+	t_list	*s;
 	t_list	*shape;
 }				t_scene;
 
@@ -120,6 +121,8 @@ typedef struct	s_quadratic
 */
 void			save_bmp(const char *filename, t_mlx *mlx);
 t_coord	v_multt(t_coord a, t_coord b);
+void	display_obj(t_list *l);
+void	del_fct(void *x);
 
 /*
 **	Error
@@ -148,7 +151,7 @@ float			sphere_intersection(t_ray *ray, t_shape *sp, t_coord *p, t_coord *n);
 float			triangle_intersection(t_ray *ray, t_shape *tr, t_coord *p, t_coord *n);
 float			plane_intersection(t_ray *ray, t_shape *tr, t_coord *p, t_coord *n);
 float			square_intersection(t_ray *ray, t_shape *pl, t_coord *p, t_coord *n);
-void			list_obj(t_mlx *mlx);
+void			list_obj(t_list *l);
 
 /*
 **	Init
@@ -157,13 +160,15 @@ int				init_minrt(t_mlx *mlx);
 void			set_value_4_pars(t_mlx *mlx);
 t_shape			*init_shape(void);
 t_cam			*init_cam(void);
+t_spot			*init_spot(void);
 
 /*
 **	Parsing
 */
 void			ft_parse(char *rt_file, t_mlx *mlx);
+void			parse_line(char *line, t_mlx *mlx);
 void			ft_parse_from_term(t_mlx *mlx);
-void			ft_parse_from_term_choice(t_mlx *mlx);
+void			ft_parse_from_term_choice(t_mlx *mlx, t_list *l);
 void			trim_ws(char **line);
 int				trim_int(char **line);
 float			trim_float(char **line);
@@ -197,11 +202,11 @@ void			get_color(t_mlx *mlx, int i, int j, t_ray *ray);
 */
 t_coord			v_copy(t_coord b);
 t_coord			v_normaliz(t_coord a);
-float			v_norm2(t_coord *a);
+float			v_n2(t_coord *a);
 float			v_dot(t_coord a, t_coord b);
 void			v_div(t_coord *a, t_coord *b);
 t_coord			v_mult(t_coord *a, float b);
-t_coord			v_minus(t_coord a, t_coord b);
+t_coord			v_sub(t_coord a, t_coord b);
 t_coord			v_plus(t_coord a, t_coord b);
 t_coord			v_cross(t_coord a, t_coord b);
 void			v_init(t_coord *a, float x, float y, float z);

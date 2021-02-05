@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 10:38:57 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/01 12:20:25 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/05 09:13:19 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	parse_cylindre(char *line, t_mlx *mlx)
 	trim_ws(&line);
 	trim_coord(&line, &cy->vector);
 	trim_ws(&line);
-	if ((cy->rayon = trim_float(&line) / 2) < 0)
+	if ((cy->r = trim_float(&line) / 2) < 0)
 		error_minirt(21);
 	trim_ws(&line);
 	if ((cy->hight = trim_float(&line)) < 0)
@@ -47,7 +47,7 @@ void	parse_sphere(char *line, t_mlx *mlx)
 	trim_ws(&line);
 	trim_coord(&line, &sp->origin);
 	trim_ws(&line);
-	if ((sp->rayon = trim_float(&line) / 2) < 0)
+	if ((sp->r = trim_float(&line) / 2) < 0)
 		error_minirt(23);
 	trim_ws(&line);
 	trim_coord(&line, &sp->rgb);

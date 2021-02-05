@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 12:09:50 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/04 10:17:05 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/05 12:23:14 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ void		shadow(t_mlx *mlx, t_ray *ray, t_coord *p, t_coord *n)
 	float	shade;
 	float	d_light2;
 
-	shadow.origin = v_plus(v_copy(*p), v_mult(n, 0.1));
+	shadow.origin = v_plus(v_copy(*p), v_mult(n, 0.01));
 	shadow.direction = v_normaliz(v_copy(mlx->tmp));
 	shade = scene_intersection(&shadow, mlx->sc->shape, &p_shade, &n_shade);
-	d_light2 = v_norm2(&mlx->tmp);
-	if (shade && shade * shade < d_light2)
+	d_light2 = v_n2(&mlx->tmp);
+	if (shade && ((shade * shade) < d_light2))
 		v_init(&ray->rgb, 0, 0, 0);
 }
 

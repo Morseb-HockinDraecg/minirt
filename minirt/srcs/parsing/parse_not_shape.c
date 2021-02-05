@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 10:03:53 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/01 12:19:11 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/05 09:21:02 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,21 @@ void	parse_cam(char *line, t_mlx *mlx)
 
 void	parse_spot(char *line, t_mlx *mlx)
 {
+	t_spot	*s;
+
+	s = init_spot();
+	s->id = 'L';
 	if (!ft_isspace(*line++) && !ft_isdigit(*line))
 		error_minirt(22);
 	trim_ws(&line);
 	if (!ft_isdigit(*line) && *line != '-')
 		error_minirt(22);
-	trim_coord(&line, &mlx->sc->s.origin);
+	trim_coord(&line, &s->origin);
 	trim_ws(&line);
 	if (!ft_isdigit(*line))
 		error_minirt(22);
-	mlx->sc->s.r = trim_float(&line);
+	s->r = trim_float(&line);
 	trim_ws(&line);
-	trim_coord(&line, &mlx->sc->s.rgb);
+	trim_coord(&line, &s->rgb);
+	ft_lstadd_back(&mlx->sc->s, ft_lstnew(s));
 }

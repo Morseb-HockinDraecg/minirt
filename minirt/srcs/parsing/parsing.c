@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:12 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/02 16:11:37 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/05 08:13:08 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	parse_line_(char *line, t_mlx *mlx)
 		error_minirt(20);
 }
 
-static void	parse_line(char *line, t_mlx *mlx)
+void	parse_line(char *line, t_mlx *mlx)
 {
 	trim_ws(&line);
 	if (*line == 'R')
@@ -76,35 +76,4 @@ void		ft_parse(char *rt_file, t_mlx *mlx)
 	}
 	check_mandatories_values(mlx);
 	init_minrt(mlx);
-}
-
-void		ft_parse_from_term(t_mlx *mlx)
-{
-	char	*line;
-
-	if (get_next_line(0, &line) < 0)
-		error_minirt(21);
-	parse_line(line, mlx);
-	free(line);
-	printf("working...\n");
-	display_scene(mlx);
-}
-
-void		ft_parse_from_term_choice(t_mlx *mlx)
-{
-	char	*line;
-	char	*l;
-	int		i;
-
-	if (get_next_line(0, &line) < 0)
-		error_minirt(21);
-	if (!ft_isdigit(*line))
-		printf("Not a number !\n");
-	l = line;
-	i = trim_int(&line);
-	free(l);
-	printf("%i\n", i);
-	if (ft_lstsize(mlx->sc->shape) < i)
-		printf("Elem not in the list\n");
-	display_scene(mlx);
 }
