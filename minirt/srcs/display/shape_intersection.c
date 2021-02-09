@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 11:02:34 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/05 12:34:59 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/09 12:47:18 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,9 @@ t_shape *tr, t_coord *p, t_coord *n)
 	t_quadratic	q;
 	float		detm;
 
-	// *n = v_normaliz(v_cross(v_sub(tr->vector, tr->origin),\
-	// v_sub(tr->pt, tr->origin)));
-	*n = v_normaliz(v_cross(v_sub(tr->vector, tr->pt),\
-	v_sub(tr->origin, tr->pt)));
+	*n = v_cross(v_sub(tr->vector, tr->origin), v_sub(tr->pt, tr->origin));
+	if (n->z < 0)
+		*n = v_mult(n, -1);
 	q.t = v_dot(v_sub(tr->origin, ray->origin), *n) / v_dot(ray->direction, *n);
 	if (q.t < 0)
 		return (0);
@@ -73,8 +72,36 @@ t_shape *tr, t_coord *p, t_coord *n)
 	q.a = 1 - q.b - q.c;
 	if (q.a < 0 || q.a > 1 || q.b < 0 || q.b > 1 || q.c < 0 || q.c > 1)
 		return (0);
+	*n = v_normaliz(*n);
 	return (q.t);
 }
+
+
+float		cylinder_intersection(t_ray *ray, t_shape *cy, t_coord *p, t_coord *n)
+{
+	t_quadratic q;
+	t_coord		r_o;
+
+	r_o = v_sub(v_copy(ray->origin), cy->origin);
+	q.a = 1;
+	q.b = 2.0 * v_dot(v_copy(ray->direction), r_o);
+	q.c = v_n2(&r_o) - (cy->r) * (cy->r);
+	q.delta = q.b * q.b - 4 * q.a * q.c;
+	if (q.delta < 0)
+		return (0);
+	q.t1 = (-q.b - sqrt(q.delta)) / (2 * q.a);
+	q.t2 = (-q.b + sqrt(q.delta)) / (2 * q.a);
+	if (q.t2 < 0)
+		return (0);
+	if (q.t1 > 0)
+		q.t = q.t1;
+	else
+		q.t = q.t2;
+	*p = v_plus(v_copy(ray->origin), v_mult(&ray->direction, q.t));
+	*n = v_normaliz(v_sub(v_copy(*p), cy->origin));
+	return (q.t);
+}
+
 
 float		sphere_intersection(t_ray *ray, t_shape *sp, t_coord *p, t_coord *n)
 {

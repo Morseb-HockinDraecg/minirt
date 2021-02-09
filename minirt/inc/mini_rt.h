@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/05 09:15:23 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/09 12:08:31 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct	s_scene
 {
 	t_spot	l;
 	t_list	*c;
+	t_cam	*cam_activ;
 	t_list	*s;
 	t_list	*shape;
 }				t_scene;
@@ -140,7 +141,7 @@ int				close_win(t_mlx *mlx);
 /*
 **	Display
 */
-void			shadow(t_mlx *mlx, t_ray *ray, t_coord *p, t_coord *n);
+float			shadow(t_mlx *mlx, t_coord *p, t_coord *n);
 void			display(t_mlx *mlx);
 void			display_scene(t_mlx *mlx);
 void			my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
@@ -150,6 +151,7 @@ float			scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n);
 float			sphere_intersection(t_ray *ray, t_shape *sp, t_coord *p, t_coord *n);
 float			triangle_intersection(t_ray *ray, t_shape *tr, t_coord *p, t_coord *n);
 float			plane_intersection(t_ray *ray, t_shape *tr, t_coord *p, t_coord *n);
+float			cylinder_intersection(t_ray *ray, t_shape *cy, t_coord *p, t_coord *n);
 float			square_intersection(t_ray *ray, t_shape *pl, t_coord *p, t_coord *n);
 void			list_obj(t_list *l);
 

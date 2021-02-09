@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:21 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/05 09:07:11 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/09 13:05:56 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,38 @@ static void	ft_obj(t_mlx *mlx)
 	list_obj(mlx->sc->shape);
 }
 
+static void	change_cam(t_mlx *mlx)
+{
+	static int	i = 1;
+	int			y;
+	t_list		*cams;
+
+	cams = mlx->sc->c;
+	y = 0;
+	if (i < ft_lstsize(mlx->sc->c))
+	{
+		y = i;
+		i++;
+	}
+	else
+		i = 1;
+	while (y--)
+		cams = cams->next;
+	mlx->sc->cam_activ = cams->content;
+}
+
 int			key_hook(int keycode, t_mlx *mlx)
 {
-printf("%d\n", keycode);
+// printf("%d\n", keycode);
 	if (keycode == 53)
 		close_win(mlx);
 	else if (keycode == 37)
 		ft_spots(mlx);
 	else if (keycode == 31)
 		ft_obj(mlx);
-	// else if (keycode == 0)
-	// 	printf("coucou\n");
-	// else
-	// {
-	// }
+	else if (keycode == 8)
+		change_cam(mlx);
+	if (keycode != 53)
+		display_scene(mlx);
 	return (keycode);
 }

@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 12:09:50 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/05 12:23:14 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/09 16:24:51 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ float		scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n)
 			intersection = plane_intersection(ray, sh, &p_local, &n_local);
 		else if (sh->id == 'q')
 			intersection = square_intersection(ray, sh, &p_local, &n_local);
+		else if (sh->id == 'y')
+			intersection = cylinder_intersection(ray, sh, &p_local, &n_local);
 		if (intersection < t_min && intersection)
 		{
 			t_min = intersection;
@@ -46,7 +48,7 @@ float		scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n)
 	return (t_min);
 }
 
-void		shadow(t_mlx *mlx, t_ray *ray, t_coord *p, t_coord *n)
+float		shadow(t_mlx *mlx, t_coord *p, t_coord *n)
 {
 	t_ray	shadow;
 	t_coord p_shade;
@@ -59,7 +61,8 @@ void		shadow(t_mlx *mlx, t_ray *ray, t_coord *p, t_coord *n)
 	shade = scene_intersection(&shadow, mlx->sc->shape, &p_shade, &n_shade);
 	d_light2 = v_n2(&mlx->tmp);
 	if (shade && ((shade * shade) < d_light2))
-		v_init(&ray->rgb, 0, 0, 0);
+		return (0.2);
+	return (1);
 }
 
 void		print_img(t_mlx *mlx)
@@ -67,11 +70,7 @@ void		print_img(t_mlx *mlx)
 	int		i;
 	int		j;
 	t_ray	ray;
-	t_list	*cams;
-	t_cam	*cam;
 
-	cams = mlx->sc->c;
-	cam = cams->content;
 	i = -1;
 	while (++i < mlx->h)
 	{
@@ -91,9 +90,9 @@ void		print_img(t_mlx *mlx)
 			// v_init(&ray.direction, j - mlx->w / 2 + 0.5 + dx, i - mlx->h / 2 + 0.5 + dy,\
 			// -mlx->w / (2 * tan(mlx->sc->c.fov / 2)));
 			v_init(&ray.direction, j - mlx->w / 2 + 0.5, i - mlx->h / 2 + 0.5,\
-			-mlx->w / (2 * tan(cam->fov / 2)));
+			-mlx->w / (2 * tan(mlx->sc->cam_activ->fov / 2)));
 			ray.direction = v_normaliz(ray.direction);
-			v_init(&ray.origin, 0, 0, 0);
+			ray.origin = v_copy(mlx->sc->cam_activ->origin);
 			get_color(mlx, i, j, &ray);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 07:35:43 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/05 09:09:49 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/09 10:33:41 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	display_msg(void)
 	printf("La scene que tu as mis en param vient d'etre generee !\n");
 	printf("l = lst light\n");
 	printf("o = lst obj \n");
+	printf("c = next cam \n");
 	printf("\n");
 }
 
@@ -50,7 +51,10 @@ void		display_scene(t_mlx *mlx)
 	img.addr = (int *)mlx_get_data_addr(img.img, &img.bits_per_pixel,\
 	&img.line_length, &img.endian);
 	mlx->ptr_img = &img;
-	print_img(mlx);
 	if (!(i++))
+	{
 		display_msg();
+		mlx->sc->cam_activ = mlx->sc->c->content;
+	}
+	print_img(mlx);
 }

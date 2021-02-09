@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:11:05 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/05 09:21:14 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/09 10:21:36 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void		ft_parse_from_term(t_mlx *mlx)
 	parse_line(line, mlx);
 	free(line);
 	printf("working...\n");
-	display_scene(mlx);
 }
 
 void		del_one_elem_list(int rang, t_mlx *mlx, t_list *l)
@@ -78,5 +77,4 @@ void		ft_parse_from_term_choice(t_mlx *mlx, t_list *l)
 	}
 	else
 		del_one_elem_list(i, mlx, l);
-	display_scene(mlx);
 }
