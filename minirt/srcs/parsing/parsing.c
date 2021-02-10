@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:12 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/05 08:13:08 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/10 14:29:52 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	parse_line_(char *line, t_mlx *mlx)
 		error_minirt(20);
 }
 
-void	parse_line(char *line, t_mlx *mlx)
+void		parse_line(char *line, t_mlx *mlx)
 {
 	trim_ws(&line);
 	if (*line == 'R')

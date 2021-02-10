@@ -6,12 +6,11 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 07:43:56 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/05 07:45:01 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/10 13:15:14 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
-
 
 int			init_minrt(t_mlx *mlx)
 {

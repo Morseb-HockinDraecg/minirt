@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 11:02:34 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/09 12:47:18 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/10 17:43:18 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,19 @@ t_shape *tr, t_coord *p, t_coord *n)
 	return (q.t);
 }
 
-
-float		cylinder_intersection(t_ray *ray, t_shape *cy, t_coord *p, t_coord *n)
+float		cylinder_intersection(t_ray *ray, t_shape *cy,\
+t_coord *p, t_coord *n)
 {
 	t_quadratic q;
 	t_coord		r_o;
+	// float		k, l;
 
 	r_o = v_sub(v_copy(ray->origin), cy->origin);
-	q.a = 1;
-	q.b = 2.0 * v_dot(v_copy(ray->direction), r_o);
-	q.c = v_n2(&r_o) - (cy->r) * (cy->r);
+	q.u = v_sub(v_copy(ray->direction), v_mult(&cy->vector, v_dot(ray->direction, cy->vector)));
+	q.v = v_sub(v_copy(r_o), v_mult(&cy->vector, v_dot(r_o, cy->vector)));
+	q.a = v_n2(&q.u);
+	q.b = 2.0 * v_dot(q.v, q.u);
+	q.c = v_n2(&q.v) - (cy->r * cy->r);
 	q.delta = q.b * q.b - 4 * q.a * q.c;
 	if (q.delta < 0)
 		return (0);
@@ -98,10 +101,10 @@ float		cylinder_intersection(t_ray *ray, t_shape *cy, t_coord *p, t_coord *n)
 	else
 		q.t = q.t2;
 	*p = v_plus(v_copy(ray->origin), v_mult(&ray->direction, q.t));
-	*n = v_normaliz(v_sub(v_copy(*p), cy->origin));
+	*n = v_cross(v_copy(*p), v_sub(cy->vector, cy->origin));
+	// *n = v_normaliz(v_sub(v_copy(*p), cy->origin));
 	return (q.t);
 }
-
 
 float		sphere_intersection(t_ray *ray, t_shape *sp, t_coord *p, t_coord *n)
 {

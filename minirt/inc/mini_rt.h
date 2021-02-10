@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/09 12:08:31 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/10 15:40:45 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ typedef struct	s_quadratic
 **	to sort
 */
 void			save_bmp(const char *filename, t_mlx *mlx);
-t_coord	v_multt(t_coord a, t_coord b);
+// t_coord	v_multt(t_coord a, t_coord b);
 void	display_obj(t_list *l);
 void	del_fct(void *x);
 
@@ -198,6 +198,9 @@ int				get_r(int trgb);
 int				get_g(int trgb);
 int				get_b(int trgb);
 void			get_color(t_mlx *mlx, int i, int j, t_ray *ray);
+float			direct_light(t_mlx *mlx, t_list *spots, t_coord *p, t_coord *n);
+void			indirect_light(t_mlx *mlx);
+
 
 /*
 **	Vector
@@ -206,7 +209,6 @@ t_coord			v_copy(t_coord b);
 t_coord			v_normaliz(t_coord a);
 float			v_n2(t_coord *a);
 float			v_dot(t_coord a, t_coord b);
-void			v_div(t_coord *a, t_coord *b);
 t_coord			v_mult(t_coord *a, float b);
 t_coord			v_sub(t_coord a, t_coord b);
 t_coord			v_plus(t_coord a, t_coord b);

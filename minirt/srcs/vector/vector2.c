@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 07:31:26 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/05 07:26:42 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/10 13:16:35 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ float	v_dot(t_coord a, t_coord b)
 t_coord	v_cross(t_coord a, t_coord b)
 {
 	t_coord c;
+
 	c.x = a.y * b.z - a.z * b.y;
 	c.y = a.z * b.x - a.x * b.z;
 	c.z = a.x * b.y - a.y * b.x;

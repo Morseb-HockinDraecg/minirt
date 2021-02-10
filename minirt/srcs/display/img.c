@@ -6,13 +6,33 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 12:09:50 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/09 16:24:51 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/10 14:56:26 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-float		scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n)
+static float	shape_choice(t_ray *ray, t_shape *sh, t_coord *p, t_coord *n)
+{
+	float	intersection;
+
+	if (sh->id == 'p')
+		intersection = sphere_intersection(ray, sh, p, n);
+	else if (sh->id == 'r')
+		intersection = triangle_intersection(ray, sh, p, n);
+	else if (sh->id == 'l')
+		intersection = plane_intersection(ray, sh, p, n);
+	else if (sh->id == 'q')
+		intersection = square_intersection(ray, sh, p, n);
+	else if (sh->id == 'y')
+		intersection = cylinder_intersection(ray, sh, p, n);
+	else
+		intersection = INT_MAX;
+	return (intersection);
+}
+
+float			scene_intersection(t_ray *ray, t_list *l, t_coord *p,\
+t_coord *n)
 {
 	t_shape *sh;
 	t_coord	p_local;
@@ -24,16 +44,7 @@ float		scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n)
 	while (l)
 	{
 		sh = l->content;
-		if (sh->id == 'p')
-			intersection = sphere_intersection(ray, sh, &p_local, &n_local);
-		else if (sh->id == 'r')
-			intersection = triangle_intersection(ray, sh, &p_local, &n_local);
-		else if (sh->id == 'l')
-			intersection = plane_intersection(ray, sh, &p_local, &n_local);
-		else if (sh->id == 'q')
-			intersection = square_intersection(ray, sh, &p_local, &n_local);
-		else if (sh->id == 'y')
-			intersection = cylinder_intersection(ray, sh, &p_local, &n_local);
+		intersection = shape_choice(ray, sh, &p_local, &n_local);
 		if (intersection < t_min && intersection)
 		{
 			t_min = intersection;
@@ -48,7 +59,7 @@ float		scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n)
 	return (t_min);
 }
 
-float		shadow(t_mlx *mlx, t_coord *p, t_coord *n)
+float			shadow(t_mlx *mlx, t_coord *p, t_coord *n)
 {
 	t_ray	shadow;
 	t_coord p_shade;
@@ -61,11 +72,11 @@ float		shadow(t_mlx *mlx, t_coord *p, t_coord *n)
 	shade = scene_intersection(&shadow, mlx->sc->shape, &p_shade, &n_shade);
 	d_light2 = v_n2(&mlx->tmp);
 	if (shade && ((shade * shade) < d_light2))
-		return (0.2);
+		return (0);
 	return (1);
 }
 
-void		print_img(t_mlx *mlx)
+void			print_img(t_mlx *mlx)
 {
 	int		i;
 	int		j;
@@ -77,18 +88,6 @@ void		print_img(t_mlx *mlx)
 		j = -1;
 		while (++j < mlx->w)
 		{
-			// float r1, r2;
-			// r1 = 0.9;
-			// r2 = 0.1;
-			// float r = sqrt(-2 * log(r1));
-			// // dprintf(1, "%f|\t", r);
-			// float dx = r * cos(2 * M_PI * r2);
-			// float dy = r * sin(2 * M_PI * r2);
-			// // dprintf(1, "|%f||%f|\n", dx, dy);
-			// dx = 0.1;
-			// dy = 0.1;
-			// v_init(&ray.direction, j - mlx->w / 2 + 0.5 + dx, i - mlx->h / 2 + 0.5 + dy,\
-			// -mlx->w / (2 * tan(mlx->sc->c.fov / 2)));
 			v_init(&ray.direction, j - mlx->w / 2 + 0.5, i - mlx->h / 2 + 0.5,\
 			-mlx->w / (2 * tan(mlx->sc->cam_activ->fov / 2)));
 			ray.direction = v_normaliz(ray.direction);
