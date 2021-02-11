@@ -6,16 +6,19 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:21 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/09 13:05:56 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/11 09:32:20 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
+
 int			close_win(t_mlx *mlx)
 {
 	mlx_destroy_window(mlx->ptr, mlx->win);
-	//FREE ALL !!
+	ft_lstclear(&mlx->sc->c, del_fct);
+	ft_lstclear(&mlx->sc->s, del_fct);
+	ft_lstclear(&mlx->sc->shape, del_fct);
 	exit(0);
 }
 

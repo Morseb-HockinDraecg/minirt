@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 11:02:34 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/10 17:43:18 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/11 17:43:03 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ float		square_intersection(t_ray *ray, t_shape *sq, t_coord *p, t_coord *n)
 	q.t = v_dot(v_sub(sq->origin, ray->origin), *n) / v_dot(ray->direction, *n);
 	if (q.t < 0)
 		return (0);
-	*p = v_plus(v_copy(ray->origin), v_mult(&ray->direction, q.t));
+	*p = v_plus(ray->origin, v_mult(&ray->direction, q.t));
 	q.delta = sq->hight / 2;
 	v_init(&side, q.delta, q.delta, 0);
 	q.u = v_plus(sq->origin, side);
@@ -44,7 +44,7 @@ float		plane_intersection(t_ray *ray, t_shape *pl, t_coord *p, t_coord *n)
 	q.t = v_dot(v_sub(pl->origin, ray->origin), *n) / v_dot(ray->direction, *n);
 	if (q.t < 0)
 		return (0);
-	*p = v_plus(v_copy(ray->origin), v_mult(&ray->direction, q.t));
+	*p = v_plus(ray->origin, v_mult(&ray->direction, q.t));
 	return (q.t);
 }
 
@@ -60,7 +60,7 @@ t_shape *tr, t_coord *p, t_coord *n)
 	q.t = v_dot(v_sub(tr->origin, ray->origin), *n) / v_dot(ray->direction, *n);
 	if (q.t < 0)
 		return (0);
-	*p = v_plus(v_copy(ray->origin), v_mult(&ray->direction, q.t));
+	*p = v_plus(ray->origin, v_mult(&ray->direction, q.t));
 	q.u = v_sub(tr->vector, tr->origin);
 	q.v = v_sub(tr->pt, tr->origin);
 	q.w = v_sub(*p, tr->origin);
@@ -80,15 +80,14 @@ float		cylinder_intersection(t_ray *ray, t_shape *cy,\
 t_coord *p, t_coord *n)
 {
 	t_quadratic q;
-	t_coord		r_o;
-	// float		k, l;
 
-	r_o = v_sub(v_copy(ray->origin), cy->origin);
-	q.u = v_sub(v_copy(ray->direction), v_mult(&cy->vector, v_dot(ray->direction, cy->vector)));
-	q.v = v_sub(v_copy(r_o), v_mult(&cy->vector, v_dot(r_o, cy->vector)));
+	q.u = v_cross(ray->direction, cy->vector);
+	q.v = v_sub(ray->origin, cy->origin);
+	q.w = v_cross(q.v, cy->vector);
+
 	q.a = v_n2(&q.u);
-	q.b = 2.0 * v_dot(q.v, q.u);
-	q.c = v_n2(&q.v) - (cy->r * cy->r);
+	q.b = 2.0 * v_dot(q.u, q.w);
+	q.c = v_n2(&q.w) - (cy->r * cy->r * v_n2(&cy->vector));
 	q.delta = q.b * q.b - 4 * q.a * q.c;
 	if (q.delta < 0)
 		return (0);
@@ -100,9 +99,24 @@ t_coord *p, t_coord *n)
 		q.t = q.t1;
 	else
 		q.t = q.t2;
-	*p = v_plus(v_copy(ray->origin), v_mult(&ray->direction, q.t));
-	*n = v_cross(v_copy(*p), v_sub(cy->vector, cy->origin));
-	// *n = v_normaliz(v_sub(v_copy(*p), cy->origin));
+	*p = v_plus(ray->origin, v_mult(&ray->direction, q.t));
+
+	t_shape plane;
+	plane.origin = cy->origin;
+	plane.vector = cy->vector;
+	plane.rgb = cy->rgb;
+	q.t1 = plane_intersection(ray, &plane, p, n);
+	plane.origin = v_plus(cy->origin, v_mult(&cy->vector, cy->hight));
+	plane.vector = v_mult(&cy->vector, -1);
+	plane.rgb = cy->rgb;
+	q.t2 = plane_intersection(ray, &plane, p, n);
+	// q.t = 0;
+	// if (q.t1 > 0)
+	// 	q.t = q.t1;
+	// else
+	// 	q.t = q.t2;
+	
+	*n = v_normaliz(v_sub(*p, cy->origin));
 	return (q.t);
 }
 
@@ -111,9 +125,9 @@ float		sphere_intersection(t_ray *ray, t_shape *sp, t_coord *p, t_coord *n)
 	t_quadratic q;
 	t_coord		r_o;
 
-	r_o = v_sub(v_copy(ray->origin), sp->origin);
+	r_o = v_sub(ray->origin, sp->origin);
 	q.a = 1;
-	q.b = 2.0 * v_dot(v_copy(ray->direction), r_o);
+	q.b = 2.0 * v_dot(ray->direction, r_o);
 	q.c = v_n2(&r_o) - (sp->r) * (sp->r);
 	q.delta = q.b * q.b - 4 * q.a * q.c;
 	if (q.delta < 0)
@@ -126,7 +140,7 @@ float		sphere_intersection(t_ray *ray, t_shape *sp, t_coord *p, t_coord *n)
 		q.t = q.t1;
 	else
 		q.t = q.t2;
-	*p = v_plus(v_copy(ray->origin), v_mult(&ray->direction, q.t));
-	*n = v_normaliz(v_sub(v_copy(*p), sp->origin));
+	*p = v_plus(ray->origin, v_mult(&ray->direction, q.t));
+	*n = v_normaliz(v_sub(*p, sp->origin));
 	return (q.t);
 }
