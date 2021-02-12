@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/11 09:56:06 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/12 16:16:02 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct	s_shape
 	t_coord	origin;
 	t_coord	rgb;
 	float	r;
-	float	hight;
+	float	height;
 	t_coord	vector;
 	t_coord	pt;
 
@@ -121,9 +121,12 @@ typedef struct	s_quadratic
 **	to sort
 */
 void			save_bmp(const char *filename, t_mlx *mlx);
-// t_coord	v_multt(t_coord a, t_coord b);
 void	display_obj(t_list *l);
 void	del_fct(void *x);
+void	parse_disk(char *line, t_mlx *mlx);
+float		disk_intersection(t_ray *ray, t_shape *dk, t_coord *p, t_coord *n);
+void	add_disk_cylinder(t_mlx *mlx, t_shape * cy);
+float	in_the_cylinder_or_not(t_shape *cy, t_coord *p, t_coord *n);
 
 /*
 **	Error
@@ -205,12 +208,10 @@ void			indirect_light(t_mlx *mlx);
 /*
 **	Vector
 */
-t_coord			v_copy(t_coord b);
 t_coord			v_normaliz(t_coord a);
 float			v_n2(t_coord *a);
 float			v_dot(t_coord a, t_coord b);
 t_coord			v_mult(t_coord *a, float b);
-// t_coord			v_mult_v(t_coord *a, t_coord *b);
 t_coord			v_sub(t_coord a, t_coord b);
 t_coord			v_plus(t_coord a, t_coord b);
 t_coord			v_cross(t_coord a, t_coord b);

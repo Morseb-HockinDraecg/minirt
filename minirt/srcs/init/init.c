@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:07 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/05 09:12:55 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/12 07:32:21 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_shape		*init_shape(void)
 	init_coord(&sh->vector);
 	init_coord(&sh->pt);
 	sh->r = -1;
-	sh->hight = -1;
+	sh->height = -1;
 	return (sh);
 }
 

@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 14:09:16 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/10 16:03:19 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/12 07:31:38 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	headlist(void)
 	fill(15 - printf("| origin"));
 	fill(15 - printf("| rgb"));
 	fill(15 - printf("| diametre/2"));
-	fill(10 - printf("| hight"));
+	fill(10 - printf("| height"));
 	fill(15 - printf("| vector"));
 	fill(16 - printf("| pt"));
 	printf("|\n");
@@ -50,7 +50,7 @@ void		list_obj(t_list *l)
 		sh->origin.z));
 		fill(15 - printf("| %.f,%.f,%.f", sh->rgb.x, sh->rgb.y, sh->rgb.z));
 		fill(15 - printf("| %.2f", sh->r));
-		fill(10 - printf("| %.2f", sh->hight));
+		fill(10 - printf("| %.2f", sh->height));
 		fill(15 - printf("| %.1f,%.1f,%.1f", sh->vector.x, sh->vector.y,\
 		sh->vector.z));
 		fill(15 - printf("| %.1f,%.1f,%.1f", sh->pt.x, sh->pt.y, sh->pt.z));
@@ -71,7 +71,7 @@ void		display_obj(t_list *l)
 	fill(15 - printf(" %.f,%.f,%.f", sh->origin.x, sh->origin.y, sh->origin.z));
 	fill(15 - printf(" %.f,%.f,%.f", sh->rgb.x, sh->rgb.y, sh->rgb.z));
 	fill(15 - printf(" %.2f", sh->r));
-	fill(10 - printf(" %.2f", sh->hight));
+	fill(10 - printf(" %.2f", sh->height));
 	fill(15 - printf(" %.f,%.f,%.f", sh->vector.x, sh->vector.y, sh->vector.z));
 	fill(15 - printf(" %.f,%.f,%.f", sh->pt.x, sh->pt.y, sh->pt.z));
 	printf("|\n");

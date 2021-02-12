@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 12:09:50 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/10 14:56:26 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/12 17:17:47 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static float	shape_choice(t_ray *ray, t_shape *sh, t_coord *p, t_coord *n)
 		intersection = square_intersection(ray, sh, p, n);
 	else if (sh->id == 'y')
 		intersection = cylinder_intersection(ray, sh, p, n);
+	else if (sh->id == 'k')
+		intersection = disk_intersection(ray, sh, p, n);
 	else
 		intersection = INT_MAX;
 	return (intersection);
@@ -50,7 +52,7 @@ t_coord *n)
 			t_min = intersection;
 			*p = p_local;
 			*n = n_local;
-			ray->rgb = v_copy(sh->rgb);
+			ray->rgb = sh->rgb;
 		}
 		l = l->next;
 	}
@@ -67,8 +69,8 @@ float			shadow(t_mlx *mlx, t_coord *p, t_coord *n)
 	float	shade;
 	float	d_light2;
 
-	shadow.origin = v_plus(v_copy(*p), v_mult(n, 0.01));
-	shadow.direction = v_normaliz(v_copy(mlx->tmp));
+	shadow.origin = v_plus(*p, v_mult(n, 0.01));
+	shadow.direction = v_normaliz(mlx->tmp);
 	shade = scene_intersection(&shadow, mlx->sc->shape, &p_shade, &n_shade);
 	d_light2 = v_n2(&mlx->tmp);
 	if (shade && ((shade * shade) < d_light2))
@@ -81,6 +83,8 @@ void			print_img(t_mlx *mlx)
 	int		i;
 	int		j;
 	t_ray	ray;
+	t_coord	up;
+	t_coord	right;
 
 	i = -1;
 	while (++i < mlx->h)
@@ -91,7 +95,12 @@ void			print_img(t_mlx *mlx)
 			v_init(&ray.direction, j - mlx->w / 2 + 0.5, i - mlx->h / 2 + 0.5,\
 			-mlx->w / (2 * tan(mlx->sc->cam_activ->fov / 2)));
 			ray.direction = v_normaliz(ray.direction);
-			ray.origin = v_copy(mlx->sc->cam_activ->origin);
+			ray.origin = mlx->sc->cam_activ->origin;
+
+			v_init(&up, 0, 1, 0);
+			right = v_cross(mlx->sc->cam_activ->vector, up);
+			ray.direction =  v_plus(v_plus(v_mult(&right, ray.direction.x), v_mult(&up, ray.direction.y)), v_mult(&mlx->sc->cam_activ->vector , ray.direction.z));
+
 			get_color(mlx, i, j, &ray);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:12 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/10 14:29:52 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/12 11:58:23 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void		parse_line(char *line, t_mlx *mlx)
 	}
 	else if (*line == 'l')
 		parse_spot(++line, mlx);
+	else if (*line == 'k')
+		parse_disk(++line, mlx);
 	else
 		parse_line_(line, mlx);
 }

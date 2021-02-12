@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 10:38:57 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/05 09:13:19 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/12 15:28:55 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ void	parse_cylindre(char *line, t_mlx *mlx)
 	if ((cy->r = trim_float(&line) / 2) < 0)
 		error_minirt(21);
 	trim_ws(&line);
-	if ((cy->hight = trim_float(&line)) < 0)
+	if ((cy->height = trim_float(&line)) < 0)
 		error_minirt(21);
 	trim_ws(&line);
 	trim_coord(&line, &cy->rgb);
 	check_rgb(&cy->rgb);
 	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(cy));
+	add_disk_cylinder(mlx, cy);
 }
 
 void	parse_sphere(char *line, t_mlx *mlx)
@@ -68,7 +69,7 @@ void	parse_square(char *line, t_mlx *mlx)
 	trim_ws(&line);
 	trim_coord(&line, &sq->vector);
 	trim_ws(&line);
-	if ((sq->hight = trim_float(&line)) < 0)
+	if ((sq->height = trim_float(&line)) < 0)
 		error_minirt(21);
 	trim_ws(&line);
 	trim_coord(&line, &sq->rgb);

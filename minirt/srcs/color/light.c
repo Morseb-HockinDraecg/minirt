@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 14:43:32 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/10 14:45:03 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/12 09:35:12 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ float	direct_light(t_mlx *mlx, t_list *spots, t_coord *p, t_coord *n)
 	while (spots)
 	{
 		s = spots->content;
-		mlx->tmp = (v_sub(v_copy(s->origin), *p));
+		mlx->tmp = (v_sub(s->origin, *p));
 		i = shadow(mlx, p, n);
 		if (i)
 		{
-			if ((i = v_dot(v_normaliz(v_sub(v_copy(s->origin), *p)), *n)) < 0)
+			if ((i = v_dot(v_normaliz(v_sub(s->origin, *p)), *n)) < 0)
 				i = 0;
 			if ((i = (s->r / M_PI) * 10000000.0 * i / v_n2(&mlx->tmp)) > 255)
 				i = 255;
