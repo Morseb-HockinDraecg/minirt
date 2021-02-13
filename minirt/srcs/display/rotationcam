@@ -1,7 +1,0 @@
-
-cam.up(0,1,0)
-
-right = v_cross(cam.direction, cam.up)
-
-ray.direction = v_plus(v_plus(v_mult(right, ray.direction.x), 
-v_mult(cam.up, ray.direction.y)),v_mult(cam.direction, ray.direction.z))

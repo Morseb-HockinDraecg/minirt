@@ -6,20 +6,32 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:35 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/01 07:33:31 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/13 11:59:13 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-int			error_minirt(int i)
+void		error_parsing_0(void)
+{
+	perror("error 20: parsing |R or A already set or no cam| ");
+}
+
+int			error_minirt(int i, t_mlx *mlx)
 {
 	int error_code;
 
+	printf("Error\n");
+	if (i < 0)
+	{
+		printf("expected : exec + rt file name [--save]\n");
+		exit(i);
+	}
 	error_code = i / 10;
 	if (error_code == 1)
 		error_format(i);
 	else if (error_code == 2)
 		error_parsing(i);
-	return (i);
+	close_win(mlx, -i);
+	return (-i);
 }

@@ -5,8 +5,32 @@ OBJ_DIR	:= $(PROJ_DIR)obj/
 BIN_DIR	:= $(PROJ_DIR)bin/
 
 NAME	:= $(BIN_DIR)minirt
-#NORME : pas de wildcard !!
-SRC		:= $(wildcard $(SRC_DIR)*.c) $(wildcard $(SRC_DIR)*/*.c)
+SRC		:= $(SRC_DIR)color/color.c\
+$(SRC_DIR)color/light.c\
+$(SRC_DIR)display/img.c\
+$(SRC_DIR)display/list_obj.c\
+$(SRC_DIR)display/shape_intersection.c\
+$(SRC_DIR)display/util.c\
+$(SRC_DIR)display/utils_cylinders.c\
+$(SRC_DIR)error/error_format.c\
+$(SRC_DIR)error/error_minirt.c\
+$(SRC_DIR)error/error_parsing.c\
+$(SRC_DIR)init/init.c\
+$(SRC_DIR)init/init_mlx.c\
+$(SRC_DIR)parsing/check_values.c\
+$(SRC_DIR)parsing/manag_lst.c\
+$(SRC_DIR)parsing/parse_not_shape.c\
+$(SRC_DIR)parsing/parse_shape.c\
+$(SRC_DIR)parsing/parsing.c\
+$(SRC_DIR)parsing/parsing_utils_cylindre.c\
+$(SRC_DIR)parsing/trim.c\
+$(SRC_DIR)vector/vector1.c\
+$(SRC_DIR)vector/vector2.c\
+$(SRC_DIR)hook.c\
+$(SRC_DIR)main.c\
+$(SRC_DIR)save.c\
+$(SRC_DIR)utils_minirt.c
+
 OBJ		:= $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
 CC		:= gcc

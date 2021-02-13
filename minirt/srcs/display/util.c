@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 07:35:43 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/12 15:33:41 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/13 12:22:50 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void		display_or_save_img(t_mlx *mlx)
 	if (mlx->save)
 	{
 		save_bmp("img.bmp", mlx);
-		close_win(mlx);
+		close_win(mlx, 0);
 	}
 	else
 		mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->ptr_img->img, 0, 0);
@@ -35,7 +35,8 @@ void		display_or_save_img(t_mlx *mlx)
 static void	display_msg(void)
 {
 	printf("Salut a toi correcteur !\n");
-	printf("La scene que tu as mis en param vient d'etre generee !\n");
+	printf("La scene que tu as mis en param est en cours de preparation !\n");
+	printf("Pose toi confortablement et enjoy ce qui va arriver !\n");
 	printf("l = lst light\n");
 	printf("o = lst obj \n");
 	printf("c = next cam \n");
@@ -53,8 +54,8 @@ void		display_scene(t_mlx *mlx)
 	mlx->ptr_img = &img;
 	if (!(i++))
 	{
-		display_msg();
 		mlx->sc->cam_activ = mlx->sc->c->content;
+		display_msg();
 	}
 	print_img(mlx);
 }

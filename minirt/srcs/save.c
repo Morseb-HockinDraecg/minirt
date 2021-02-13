@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 09:21:33 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/29 09:23:40 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/13 14:46:53 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,5 @@ void			save_bmp(const char *filename, t_mlx *mlx)
 	write(fd, create_bitmap_info_header(mlx), 40);
 	write_img(fd, mlx);
 	close(fd);
-	ft_putstr_fd("Image generated!!", 1);
+	ft_putstr_fd("Image generated!!\n", 1);
 }

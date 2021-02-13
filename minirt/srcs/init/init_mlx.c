@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 07:43:56 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/10 13:15:14 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/13 10:20:16 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int			init_minrt(t_mlx *mlx)
 {
 	if (!(mlx->ptr = mlx_init()))
-		return (error_minirt(98));
+		return (error_minirt(10, mlx));
 	if (!(mlx->win = mlx_new_window(mlx->ptr, mlx->w, mlx->h, "miniRT")))
-		return (error_minirt(99));
+		return (error_minirt(11, mlx));
 	return (-1);
 }

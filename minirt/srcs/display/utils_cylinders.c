@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:33:33 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/12 16:55:20 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/13 14:48:05 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ float	in_the_cylinder_or_not(t_shape *cy, t_coord *p, t_coord *n)
 	t_shape		plane;
 	t_ray		tmp;
 	t_quadratic	q;
+	float		alpha;
+	t_coord		c;
 
 	q.t = 1;
 	tmp.direction = cy->vector;
@@ -46,6 +48,9 @@ float	in_the_cylinder_or_not(t_shape *cy, t_coord *p, t_coord *n)
 	q.t2 = plane_intersection(&tmp, &plane, p, &q.v);
 	if (q.t1 != 0 || q.t2 != 0)
 		q.t = 0;
-	*n = v_normaliz(v_sub(*p, cy->origin));
+	alpha = cy->vector.x * (p->x - cy->origin.x) + cy->vector.y *\
+	(p->y - cy->origin.y) + cy->vector.z * (p->z - cy->origin.z);
+	c = v_plus(cy->origin, v_mult(&cy->vector, alpha));
+	*n = v_normaliz(v_sub(*p, c));
 	return (q.t);
 }

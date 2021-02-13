@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:11:05 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/09 10:21:36 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/13 10:21:13 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		ft_parse_from_term(t_mlx *mlx)
 	char	*line;
 
 	if (get_next_line(0, &line) < 0)
-		error_minirt(21);
+		error_minirt(22, mlx);
 	parse_line(line, mlx);
 	free(line);
 	printf("working...\n");
@@ -60,7 +60,7 @@ void		ft_parse_from_term_choice(t_mlx *mlx, t_list *l)
 	if (!l)
 		return ;
 	if (get_next_line(0, &line) < 0)
-		error_minirt(21);
+		error_minirt(22, mlx);
 	if (!ft_isdigit(*line))
 	{
 		printf("Not a number !\n");

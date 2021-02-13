@@ -6,19 +6,20 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:21 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/12 15:27:53 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/13 12:01:11 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-int			close_win(t_mlx *mlx)
+int			close_win(t_mlx *mlx, int i)
 {
 	mlx_destroy_window(mlx->ptr, mlx->win);
 	ft_lstclear(&mlx->sc->c, del_fct);
 	ft_lstclear(&mlx->sc->s, del_fct);
 	ft_lstclear(&mlx->sc->shape, del_fct);
-	exit(0);
+	printf("Window closed and program quit cleany ;)");
+	exit(i);
 }
 
 static void	ft_spots(t_mlx *mlx)
@@ -63,9 +64,8 @@ static void	change_cam(t_mlx *mlx)
 
 int			key_hook(int keycode, t_mlx *mlx)
 {
-// printf("%d\n", keycode);
 	if (keycode == 53)
-		close_win(mlx);
+		close_win(mlx, 0);
 	else if (keycode == 37)
 		ft_spots(mlx);
 	else if (keycode == 31)

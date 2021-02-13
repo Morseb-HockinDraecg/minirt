@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:02 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/10 14:29:29 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/13 10:34:46 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		main(int argc, char **argv)
 {
 	t_mlx	*mlx;
 
-	if (argc < 4 && argc)
+	if (argc == 2 || argc == 3)
 	{
 		mlx = (t_mlx *)malloc(sizeof(t_mlx));
 		ft_parse(argv[1], mlx);
@@ -33,5 +33,5 @@ int		main(int argc, char **argv)
 		loop_minirt(mlx);
 	}
 	else
-		return (error_minirt(1));
+		return (error_minirt(-1, NULL));
 }

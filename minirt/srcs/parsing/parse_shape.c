@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 10:38:57 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/12 15:28:55 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/13 10:29:52 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,21 @@ void	parse_cylindre(char *line, t_mlx *mlx)
 	cy = init_shape();
 	cy->id = 'y';
 	if (!ft_isspace(*line++) && !ft_isdigit(*line))
-		error_minirt(22);
+		error_minirt(24, mlx);
 	trim_ws(&line);
-	trim_coord(&line, &cy->origin);
+	trim_coord(&line, &cy->origin, mlx);
 	trim_ws(&line);
-	trim_coord(&line, &cy->vector);
+	trim_coord(&line, &cy->vector, mlx);
+	if (!check_orientation_3d(&cy->vector))
+		error_minirt(23, mlx);
 	trim_ws(&line);
-	if ((cy->r = trim_float(&line) / 2) < 0)
-		error_minirt(21);
+	if ((cy->r = trim_float(&line, mlx) / 2) < 0)
+		error_minirt(23, mlx);
 	trim_ws(&line);
-	if ((cy->height = trim_float(&line)) < 0)
-		error_minirt(21);
+	if ((cy->height = trim_float(&line, mlx)) < 0)
+		error_minirt(23, mlx);
 	trim_ws(&line);
-	trim_coord(&line, &cy->rgb);
+	trim_coord(&line, &cy->rgb, mlx);
 	check_rgb(&cy->rgb);
 	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(cy));
 	add_disk_cylinder(mlx, cy);
@@ -44,14 +46,14 @@ void	parse_sphere(char *line, t_mlx *mlx)
 	sp = init_shape();
 	sp->id = 'p';
 	if (!ft_isspace(*line++) && !ft_isdigit(*line))
-		error_minirt(22);
+		error_minirt(24, mlx);
 	trim_ws(&line);
-	trim_coord(&line, &sp->origin);
+	trim_coord(&line, &sp->origin, mlx);
 	trim_ws(&line);
-	if ((sp->r = trim_float(&line) / 2) < 0)
-		error_minirt(23);
+	if ((sp->r = trim_float(&line, mlx) / 2) < 0)
+		error_minirt(23, mlx);
 	trim_ws(&line);
-	trim_coord(&line, &sp->rgb);
+	trim_coord(&line, &sp->rgb, mlx);
 	check_rgb(&sp->rgb);
 	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(&(*sp)));
 }
@@ -63,16 +65,18 @@ void	parse_square(char *line, t_mlx *mlx)
 	sq = init_shape();
 	sq->id = 'q';
 	if (!ft_isspace(*line++) && !ft_isdigit(*line))
-		error_minirt(22);
+		error_minirt(24, mlx);
 	trim_ws(&line);
-	trim_coord(&line, &sq->origin);
+	trim_coord(&line, &sq->origin, mlx);
 	trim_ws(&line);
-	trim_coord(&line, &sq->vector);
+	trim_coord(&line, &sq->vector, mlx);
+	if (!check_orientation_3d(&sq->vector))
+		error_minirt(23, mlx);
 	trim_ws(&line);
-	if ((sq->height = trim_float(&line)) < 0)
-		error_minirt(21);
+	if ((sq->height = trim_float(&line, mlx)) < 0)
+		error_minirt(23, mlx);
 	trim_ws(&line);
-	trim_coord(&line, &sq->rgb);
+	trim_coord(&line, &sq->rgb, mlx);
 	check_rgb(&sq->rgb);
 	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(sq));
 }
@@ -84,13 +88,15 @@ void	parse_plane(char *line, t_mlx *mlx)
 	pl = init_shape();
 	pl->id = 'l';
 	if (!ft_isspace(*line++) && !ft_isdigit(*line))
-		error_minirt(22);
+		error_minirt(24, mlx);
 	trim_ws(&line);
-	trim_coord(&line, &pl->origin);
+	trim_coord(&line, &pl->origin, mlx);
 	trim_ws(&line);
-	trim_coord(&line, &pl->vector);
+	trim_coord(&line, &pl->vector, mlx);
+	if (!check_orientation_3d(&pl->vector))
+		error_minirt(23, mlx);
 	trim_ws(&line);
-	trim_coord(&line, &pl->rgb);
+	trim_coord(&line, &pl->rgb, mlx);
 	check_rgb(&pl->rgb);
 	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(pl));
 }
@@ -102,15 +108,15 @@ void	parse_triangle(char *line, t_mlx *mlx)
 	tr = init_shape();
 	tr->id = 'r';
 	if (!ft_isspace(*line++) && !ft_isdigit(*line))
-		error_minirt(22);
+		error_minirt(24, mlx);
 	trim_ws(&line);
-	trim_coord(&line, &tr->origin);
+	trim_coord(&line, &tr->origin, mlx);
 	trim_ws(&line);
-	trim_coord(&line, &tr->vector);
+	trim_coord(&line, &tr->vector, mlx);
 	trim_ws(&line);
-	trim_coord(&line, &tr->pt);
+	trim_coord(&line, &tr->pt, mlx);
 	trim_ws(&line);
-	trim_coord(&line, &tr->rgb);
+	trim_coord(&line, &tr->rgb, mlx);
 	check_rgb(&tr->rgb);
 	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(tr));
 }

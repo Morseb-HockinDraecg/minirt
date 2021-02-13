@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/12 16:16:02 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/13 11:02:35 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,44 +118,44 @@ typedef struct	s_quadratic
 }				t_quadratic;
 
 /*
-**	to sort
-*/
-void			save_bmp(const char *filename, t_mlx *mlx);
-void	display_obj(t_list *l);
-void	del_fct(void *x);
-void	parse_disk(char *line, t_mlx *mlx);
-float		disk_intersection(t_ray *ray, t_shape *dk, t_coord *p, t_coord *n);
-void	add_disk_cylinder(t_mlx *mlx, t_shape * cy);
-float	in_the_cylinder_or_not(t_shape *cy, t_coord *p, t_coord *n);
-
-/*
 **	Error
 */
-int				error_minirt(int i);
+int				error_minirt(int i, t_mlx *mlx);
 void			error_format(int i);
 void			error_parsing(int i);
+void			error_parsing_0(void);
 
 /*
 **	Hook
 */
 int				key_hook(int keycode, t_mlx *mlx);
-int				close_win(t_mlx *mlx);
+int				close_win(t_mlx *mlx, int i);
 
 /*
 **	Display
 */
+void			display_obj(t_list *l);
 float			shadow(t_mlx *mlx, t_coord *p, t_coord *n);
 void			display(t_mlx *mlx);
 void			display_scene(t_mlx *mlx);
 void			my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 void			print_img(t_mlx *mlx);
 void			display_or_save_img(t_mlx *mlx);
-float			scene_intersection(t_ray *ray, t_list *l, t_coord *p, t_coord *n);
-float			sphere_intersection(t_ray *ray, t_shape *sp, t_coord *p, t_coord *n);
-float			triangle_intersection(t_ray *ray, t_shape *tr, t_coord *p, t_coord *n);
-float			plane_intersection(t_ray *ray, t_shape *tr, t_coord *p, t_coord *n);
-float			cylinder_intersection(t_ray *ray, t_shape *cy, t_coord *p, t_coord *n);
-float			square_intersection(t_ray *ray, t_shape *pl, t_coord *p, t_coord *n);
+float			scene_intersection(t_ray *ray, t_list *l, t_coord *p,\
+				t_coord *n);
+float			sphere_intersection(t_ray *ray, t_shape *sp, t_coord *p,\
+				t_coord *n);
+float			triangle_intersection(t_ray *ray, t_shape *tr, t_coord *p,\
+				t_coord *n);
+float			plane_intersection(t_ray *ray, t_shape *tr, t_coord *p,\
+				t_coord *n);
+float			cylinder_intersection(t_ray *ray, t_shape *cy, t_coord *p,\
+				t_coord *n);
+float			square_intersection(t_ray *ray, t_shape *pl, t_coord *p,\
+				t_coord *n);
+float			disk_intersection(t_ray *ray, t_shape *dk, t_coord *p,\
+				t_coord *n);
+float			in_the_cylinder_or_not(t_shape *cy, t_coord *p, t_coord *n);
 void			list_obj(t_list *l);
 
 /*
@@ -176,8 +176,8 @@ void			ft_parse_from_term(t_mlx *mlx);
 void			ft_parse_from_term_choice(t_mlx *mlx, t_list *l);
 void			trim_ws(char **line);
 int				trim_int(char **line);
-float			trim_float(char **line);
-void			trim_coord(char **line, t_coord *coord);
+float			trim_float(char **line, t_mlx *mlx);
+void			trim_coord(char **line, t_coord *coord, t_mlx *mlx);
 int				check_rgb(t_coord *coord);
 int				check_orientation_3d(t_coord *coord);
 void			check_mandatories_values(t_mlx *mlx);
@@ -188,10 +188,12 @@ void			parse_light(char *line, t_mlx *mlx);
 void			parse_cam(char *line, t_mlx *mlx);
 void			parse_spot(char *line, t_mlx *mlx);
 void			parse_cylindre(char *line, t_mlx *mlx);
+void			add_disk_cylinder(t_mlx *mlx, t_shape *cy);
 void			parse_sphere(char *line, t_mlx *mlx);
 void			parse_square(char *line, t_mlx *mlx);
 void			parse_plane(char *line, t_mlx *mlx);
 void			parse_triangle(char *line, t_mlx *mlx);
+void			parse_disk(char *line, t_mlx *mlx);
 
 /*
 **	Color
@@ -204,7 +206,6 @@ void			get_color(t_mlx *mlx, int i, int j, t_ray *ray);
 float			direct_light(t_mlx *mlx, t_list *spots, t_coord *p, t_coord *n);
 void			indirect_light(t_mlx *mlx);
 
-
 /*
 **	Vector
 */
@@ -216,5 +217,11 @@ t_coord			v_sub(t_coord a, t_coord b);
 t_coord			v_plus(t_coord a, t_coord b);
 t_coord			v_cross(t_coord a, t_coord b);
 void			v_init(t_coord *a, float x, float y, float z);
+
+/*
+**	others
+*/
+void			save_bmp(const char *filename, t_mlx *mlx);
+void			del_fct(void *x);
 
 #endif

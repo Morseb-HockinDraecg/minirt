@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:12 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/12 11:58:23 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/13 12:01:43 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	parse_line_(char *line, t_mlx *mlx)
 	else if (*line == '\0' || *line == '#')
 		;
 	else
-		error_minirt(20);
+		error_minirt(21, mlx);
 }
 
 void		parse_line(char *line, t_mlx *mlx)
@@ -67,15 +67,16 @@ void		ft_parse(char *rt_file, t_mlx *mlx)
 
 	set_value_4_pars(mlx);
 	if ((fd = open(rt_file, O_RDONLY)) < 0)
-		error_minirt(20);
+		error_minirt(20, mlx);
 	ret = 1;
 	while (ret > 0)
 	{
 		if ((ret = get_next_line(fd, &line)) < 0)
-			error_minirt(21);
+			error_minirt(12, mlx);
 		parse_line(line, mlx);
 		free(line);
 	}
-	check_mandatories_values(mlx);
 	init_minrt(mlx);
+	if (!mlx->sc->c)
+		error_minirt(20, mlx);
 }

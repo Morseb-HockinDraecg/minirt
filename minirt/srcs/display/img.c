@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 12:09:50 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/12 17:17:47 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/13 10:36:19 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,14 @@ void			print_img(t_mlx *mlx)
 		while (++j < mlx->w)
 		{
 			v_init(&ray.direction, j - mlx->w / 2 + 0.5, i - mlx->h / 2 + 0.5,\
-			-mlx->w / (2 * tan(mlx->sc->cam_activ->fov / 2)));
+			mlx->w / (2 * tan(mlx->sc->cam_activ->fov / 2)));
 			ray.direction = v_normaliz(ray.direction);
 			ray.origin = mlx->sc->cam_activ->origin;
-
 			v_init(&up, 0, 1, 0);
 			right = v_cross(mlx->sc->cam_activ->vector, up);
-			ray.direction =  v_plus(v_plus(v_mult(&right, ray.direction.x), v_mult(&up, ray.direction.y)), v_mult(&mlx->sc->cam_activ->vector , ray.direction.z));
-
+			ray.direction = v_plus(v_plus(v_mult(&right, ray.direction.x),\
+			v_mult(&up, ray.direction.y)),\
+			v_mult(&mlx->sc->cam_activ->vector, ray.direction.z));
 			get_color(mlx, i, j, &ray);
 		}
 	}

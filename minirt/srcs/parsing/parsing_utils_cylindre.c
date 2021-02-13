@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:24:21 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/12 15:31:33 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/13 10:30:22 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,16 @@ void	parse_disk(char *line, t_mlx *mlx)
 	sq = init_shape();
 	sq->id = 'k';
 	if (!ft_isspace(*line++) && !ft_isdigit(*line))
-		error_minirt(22);
+		error_minirt(24, mlx);
 	trim_ws(&line);
-	trim_coord(&line, &sq->origin);
+	trim_coord(&line, &sq->origin, mlx);
 	trim_ws(&line);
-	trim_coord(&line, &sq->vector);
+	trim_coord(&line, &sq->vector, mlx);
 	trim_ws(&line);
-	if ((sq->height = trim_float(&line)) < 0)
-		error_minirt(21);
+	if ((sq->height = trim_float(&line, mlx)) < 0)
+		error_minirt(23, mlx);
 	trim_ws(&line);
-	trim_coord(&line, &sq->rgb);
+	trim_coord(&line, &sq->rgb, mlx);
 	check_rgb(&sq->rgb);
 	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(sq));
 }

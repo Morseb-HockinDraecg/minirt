@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:12 by smorel            #+#    #+#             */
-/*   Updated: 2021/01/29 17:23:11 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/13 10:30:40 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,27 @@ static int	sign_coord(char **line)
 	return (1);
 }
 
-void		trim_coord(char **line, t_coord *coord)
+void		trim_coord(char **line, t_coord *coord, t_mlx *mlx)
 {
 	int sign;
 
 	sign = sign_coord(line);
-	coord->x = sign * trim_float(line);
+	coord->x = sign * trim_float(line, mlx);
 	if (*(*line)++ == ',')
 		;
 	else
-		error_parsing(24);
+		error_minirt(22, mlx);
 	sign = sign_coord(line);
-	coord->y = sign * trim_float(line);
+	coord->y = sign * trim_float(line, mlx);
 	if (*(*line)++ == ',')
 		;
 	else
-		error_parsing(20);
+		error_minirt(22, mlx);
 	sign = sign_coord(line);
-	coord->z = sign * trim_float(line);
+	coord->z = sign * trim_float(line, mlx);
 }
 
-float		trim_float(char **line)
+float		trim_float(char **line, t_mlx *mlx)
 {
 	float f;
 	float tmp;
@@ -53,7 +53,7 @@ float		trim_float(char **line)
 	{
 		(*line)++;
 		if ((tmp = trim_int(line) / pow(10, ft_intlen(trim_int(line)))) < 0)
-			error_minirt(23);
+			error_minirt(21, mlx);
 	}
 	f += tmp;
 	return (f);
