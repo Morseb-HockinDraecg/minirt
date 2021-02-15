@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 15:15:42 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/13 10:20:29 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/15 09:04:58 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,13 @@ int			check_orientation_3d(t_coord *coord)
 
 void		check_mandatories_values(t_mlx *mlx)
 {
-	if (mlx->h < 0 ||
-	mlx->w < 0)
+	if (mlx->h <= 0 || mlx->w <= 0 || (mlx->h == 1400 && mlx->w == 1400))
 		error_minirt(21, mlx);
 }
 
 int			check_r(t_mlx *mlx)
 {
-	return (mlx->h < 0 && mlx->w < 0);
+	return (mlx->h == 1400 && mlx->w == 1400);
 }
 
 int			check_a(t_mlx *mlx)

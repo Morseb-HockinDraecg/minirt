@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:12 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/13 12:01:43 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/15 10:02:17 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void		ft_parse(char *rt_file, t_mlx *mlx)
 	char	*line;
 
 	set_value_4_pars(mlx);
+	init_minrt(mlx);
 	if ((fd = open(rt_file, O_RDONLY)) < 0)
 		error_minirt(20, mlx);
 	ret = 1;
@@ -76,6 +77,7 @@ void		ft_parse(char *rt_file, t_mlx *mlx)
 		parse_line(line, mlx);
 		free(line);
 	}
+	mlx_destroy_window(mlx->ptr, mlx->win);
 	init_minrt(mlx);
 	if (!mlx->sc->c)
 		error_minirt(20, mlx);

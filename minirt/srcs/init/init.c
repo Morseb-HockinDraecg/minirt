@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:30:07 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/12 07:32:21 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/15 08:38:22 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void		set_value_4_pars(t_mlx *mlx)
 {
 	t_scene	*scene;
 
-	mlx->h = -1;
-	mlx->w = -1;
+	mlx->h = 1400;
+	mlx->w = 1400;
 	scene = (t_scene *)malloc(sizeof(t_scene));
 	mlx->sc = scene;
 	mlx->sc->l.r = -1;
