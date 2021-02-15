@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 12:09:50 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/13 10:36:19 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/15 08:18:53 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,28 +80,28 @@ float			shadow(t_mlx *mlx, t_coord *p, t_coord *n)
 
 void			print_img(t_mlx *mlx)
 {
-	int		i;
-	int		j;
+	int		i[2];
 	t_ray	ray;
-	t_coord	up;
-	t_coord	right;
+	t_ray_c	c;
 
-	i = -1;
-	while (++i < mlx->h)
+	i[0] = -1;
+	while (++i[0] < mlx->h)
 	{
-		j = -1;
-		while (++j < mlx->w)
+		i[1] = -1;
+		while (++i[1] < mlx->w)
 		{
-			v_init(&ray.direction, j - mlx->w / 2 + 0.5, i - mlx->h / 2 + 0.5,\
-			mlx->w / (2 * tan(mlx->sc->cam_activ->fov / 2)));
+			v_init(&ray.direction, i[1] - mlx->w / 2 + 0.5, i[0] - mlx->h / 2\
+			+ 0.5, mlx->w / (2 * tan(mlx->sc->cam_activ->fov / 2)));
 			ray.direction = v_normaliz(ray.direction);
 			ray.origin = mlx->sc->cam_activ->origin;
-			v_init(&up, 0, 1, 0);
-			right = v_cross(mlx->sc->cam_activ->vector, up);
-			ray.direction = v_plus(v_plus(v_mult(&right, ray.direction.x),\
-			v_mult(&up, ray.direction.y)),\
-			v_mult(&mlx->sc->cam_activ->vector, ray.direction.z));
-			get_color(mlx, i, j, &ray);
+			v_init(&c.up, 0, 1, 0);
+			c.view = v_normaliz(mlx->sc->cam_activ->vector);
+			c.right = v_normaliz(v_cross(c.view, c.up));
+			c.up = v_normaliz(v_cross(c.right, c.view));
+			ray.direction = v_normaliz(v_plus(v_plus(v_mult(&c.right,\
+			ray.direction.x), v_mult(&c.up, ray.direction.y)),\
+			v_mult(&c.view, ray.direction.z)));
+			get_color(mlx, i[0], i[1], &ray);
 		}
 	}
 	display_or_save_img(mlx);

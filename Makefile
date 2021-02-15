@@ -88,14 +88,3 @@ fclean_re:
 	echo "--------------------------------------------"
 
 re: fclean_re all
-
-# -include $(OBJ:.o=.d)
-
-# LDFLAGS	:= -Lminilibx -Wl,-rpath=./minilibx/ -lmlx #-fPIC
-## NAME
-	# export LD_LIBRARY_PATH=../minilibx;\
-	# echo $$LD_LIBRARY_PATH
-	# $( info LD_LIBRARY_PATH : |$(LD_LIBRARY_PATH)|)
-##clean
-	# unset LD_LIBRARY_PATH
-	# LD_LIBRARY_PATH unset 

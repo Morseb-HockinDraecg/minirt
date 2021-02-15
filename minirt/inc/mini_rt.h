@@ -6,7 +6,7 @@
 /*   By: smorel <smorel@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:23:38 by smorel            #+#    #+#             */
-/*   Updated: 2021/02/13 11:02:35 by smorel           ###   ########lyon.fr   */
+/*   Updated: 2021/02/15 07:50:14 by smorel           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@ typedef struct	s_ray
 	t_coord	direction;
 	t_coord	rgb;
 }				t_ray;
+
+typedef struct	s_ray_c
+{
+	t_coord	view;
+	t_coord	up;
+	t_coord	right;
+}				t_ray_c;
 
 typedef struct	s_cam
 {
