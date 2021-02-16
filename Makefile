@@ -4,7 +4,7 @@ INC_DIR	:= $(PROJ_DIR)inc/
 OBJ_DIR	:= $(PROJ_DIR)obj/
 BIN_DIR	:= $(PROJ_DIR)bin/
 
-NAME	:= $(BIN_DIR)minirt
+NAME	:= $(BIN_DIR)miniRT
 SRC		:= $(SRC_DIR)color/color.c\
 $(SRC_DIR)color/light.c\
 $(SRC_DIR)display/img.c\
@@ -19,6 +19,7 @@ $(SRC_DIR)init/init.c\
 $(SRC_DIR)init/init_mlx.c\
 $(SRC_DIR)parsing/check_values.c\
 $(SRC_DIR)parsing/manag_lst.c\
+$(SRC_DIR)parsing/manag_lst2.c\
 $(SRC_DIR)parsing/parse_not_shape.c\
 $(SRC_DIR)parsing/parse_shape.c\
 $(SRC_DIR)parsing/parsing.c\

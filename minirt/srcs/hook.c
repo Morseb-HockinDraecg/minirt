@@ -22,24 +22,24 @@ int			close_win(t_mlx *mlx, int i)
 	exit(i);
 }
 
-static void	ft_spots(t_mlx *mlx)
+static void	translation(t_mlx *mlx, int k)
 {
-	list_obj(mlx->sc->s);
-	printf("select an id number to delete it or change it\n");
-	ft_parse_from_term_choice(mlx, mlx->sc->s);
-	printf("enter a valid parsing :\n");
-	ft_parse_from_term(mlx);
-	list_obj(mlx->sc->s);
-}
-
-static void	ft_obj(t_mlx *mlx)
-{
-	list_obj(mlx->sc->shape);
-	printf("select an id number to delete it or change it\n");
-	ft_parse_from_term_choice(mlx, mlx->sc->shape);
-	printf("enter a valid parsing :\n");
-	ft_parse_from_term(mlx);
-	list_obj(mlx->sc->shape);
+	if (k == 0)
+		list_obj(mlx->sc->shape);
+	if (k == 1)
+		list_obj(mlx->sc->s);
+	if (k == 2)
+		list_obj(mlx->sc->c);
+	printf("Select an id number then a vector (x,y,z) and a float positif\n");
+	printf("You can add an 'r' a the end of the line for a rotation. ");
+	printf("No r on sphere, triangle and light. ");
+	printf("If not, it will be a translation\n");
+	if (k == 0)
+		ft_parse_from_term_choice(mlx, mlx->sc->shape, k);
+	if (k == 1)
+		ft_parse_from_term_choice(mlx, mlx->sc->s, k);
+	if (k == 2)
+		ft_parse_from_term_choice(mlx, mlx->sc->c, k);
 }
 
 static void	change_cam(t_mlx *mlx)
@@ -60,16 +60,20 @@ static void	change_cam(t_mlx *mlx)
 	while (y--)
 		cams = cams->next;
 	mlx->sc->cam_activ = cams->content;
+	if (mlx->sc->cam_activ->vector.x == 0 && mlx->sc->cam_activ->vector.z == 0)
+		mlx->sc->cam_activ->vector.z = 0.00001;
 }
 
 int			key_hook(int keycode, t_mlx *mlx)
 {
 	if (keycode == 53)
 		close_win(mlx, 0);
-	else if (keycode == 37)
-		ft_spots(mlx);
 	else if (keycode == 31)
-		ft_obj(mlx);
+		translation(mlx, 0);
+	else if (keycode == 37)
+		translation(mlx, 1);
+	else if (keycode == 35)
+		translation(mlx, 2);
 	else if (keycode == 8)
 		change_cam(mlx);
 	if (keycode != 53)

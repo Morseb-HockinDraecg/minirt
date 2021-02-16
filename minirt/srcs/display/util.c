@@ -55,6 +55,9 @@ void		display_scene(t_mlx *mlx)
 	if (!(i++))
 	{
 		mlx->sc->cam_activ = mlx->sc->c->content;
+		if (mlx->sc->cam_activ->vector.x == 0 &&\
+		mlx->sc->cam_activ->vector.z == 0)
+			mlx->sc->cam_activ->vector.z = 0.00001;
 		display_msg();
 	}
 	print_img(mlx);

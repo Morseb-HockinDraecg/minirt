@@ -60,7 +60,7 @@ void	parse_cam(char *line, t_mlx *mlx)
 		error_minirt(22, mlx);
 	trim_coord(&line, &cam->origin, mlx);
 	trim_ws(&line);
-	if (!ft_isdigit(*line))
+	if (!ft_isdigit(*line) && *line != '-')
 		error_minirt(22, mlx);
 	trim_coord(&line, &cam->vector, mlx);
 	if (!check_orientation_3d(&cam->vector))

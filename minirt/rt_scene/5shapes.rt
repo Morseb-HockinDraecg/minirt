@@ -2,7 +2,7 @@
 R  1920		1080 	The reolution of the window
 # A   0.7		    	255,255,255  The ambiant lighting
 
-l 0,0,0    1       255,255,255	the spot lighting
+l 0,10,0    0.2       255,255,255	the spot lighting
 
 c   0,0,0       0,0,-1   110	The cam
 

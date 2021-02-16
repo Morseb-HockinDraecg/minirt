@@ -124,6 +124,14 @@ typedef struct	s_quadratic
 	t_coord	w;
 }				t_quadratic;
 
+typedef struct	s_translarota
+{
+	int		i;
+	t_coord	vec;
+	float	mult;
+	char	op;
+}				t_translarota;
+
 /*
 **	Error
 */
@@ -141,7 +149,6 @@ int				close_win(t_mlx *mlx, int i);
 /*
 **	Display
 */
-void			display_obj(t_list *l);
 float			shadow(t_mlx *mlx, t_coord *p, t_coord *n);
 void			display(t_mlx *mlx);
 void			display_scene(t_mlx *mlx);
@@ -179,8 +186,7 @@ t_spot			*init_spot(void);
 */
 void			ft_parse(char *rt_file, t_mlx *mlx);
 void			parse_line(char *line, t_mlx *mlx);
-void			ft_parse_from_term(t_mlx *mlx);
-void			ft_parse_from_term_choice(t_mlx *mlx, t_list *l);
+void			ft_parse_from_term_choice(t_mlx *mlx, t_list *l, int k);
 void			trim_ws(char **line);
 int				trim_int(char **line);
 float			trim_float(char **line, t_mlx *mlx);
@@ -230,5 +236,7 @@ void			v_init(t_coord *a, float x, float y, float z);
 */
 void			save_bmp(const char *filename, t_mlx *mlx);
 void			del_fct(void *x);
+void			del_one_elem_list(int rang, t_list *l);
+void			new_cy(t_mlx *mlx, t_list *l, t_shape *sh);
 
 #endif

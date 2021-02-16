@@ -61,20 +61,3 @@ void		list_obj(t_list *l)
 	printf("----------------------------------------------------------------");
 	printf("----------------------------\n");
 }
-
-void		display_obj(t_list *l)
-{
-	t_shape	*sh;
-
-	sh = l->content;
-	fill(2 - printf(" %c", sh->id));
-	fill(15 - printf(" %.f,%.f,%.f", sh->origin.x, sh->origin.y, sh->origin.z));
-	fill(15 - printf(" %.f,%.f,%.f", sh->rgb.x, sh->rgb.y, sh->rgb.z));
-	fill(15 - printf(" %.2f", sh->r));
-	fill(10 - printf(" %.2f", sh->height));
-	fill(15 - printf(" %.f,%.f,%.f", sh->vector.x, sh->vector.y, sh->vector.z));
-	fill(15 - printf(" %.f,%.f,%.f", sh->pt.x, sh->pt.y, sh->pt.z));
-	printf("|\n");
-	printf("----------------------------------------------------------------");
-	printf("---------------------------\n");
-}

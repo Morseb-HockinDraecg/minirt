@@ -12,69 +12,119 @@
 
 #include "mini_rt.h"
 
-void		ft_parse_from_term(t_mlx *mlx)
+static void	modif_elem_list(t_mlx *mlx, t_translarota *p, int k)
 {
-	char	*line;
+	t_list	*l;
+	t_shape	*sh;
+	t_spot	*s;
+	t_cam	*c;
 
-	if (get_next_line(0, &line) < 0)
-		error_minirt(22, mlx);
-	parse_line(line, mlx);
-	free(line);
-	printf("working...\n");
+	if (k == 0)
+		l = mlx->sc->shape;
+	else if (k == 1)
+		l = mlx->sc->s;
+	else if (k == 2)
+		l = mlx->sc->c;
+	while ((p->i)--)
+		l = l->next;
+	if (k == 0)
+	{
+		sh = l->content;
+		sh->origin = v_plus(sh->origin, p->vec);
+		if (sh->id == 'r')
+		{
+			sh->vector = v_plus(sh->vector, p->vec);
+			sh->pt = v_plus(sh->pt, p->vec);
+		}
+		if (sh->id == 'y')
+			new_cy(mlx, l, sh);
+	}
+	else if (k == 1)
+	{
+		s = l->content;
+		s->origin = v_plus(s->origin, p->vec);
+	}
+	else if (k == 2)
+	{
+		c = l->content;
+		c->origin = v_plus(c->origin, p->vec);
+	}
 }
 
-void		del_one_elem_list(int rang, t_mlx *mlx, t_list *l)
+static void	modif_elem_list_rota(t_mlx *mlx, t_translarota *p)
 {
-	t_list	*tmp;
-	t_list	*to_del;
+	t_list	*l;
+	t_shape	*sh;
 
 	l = mlx->sc->shape;
-	tmp = NULL;
-	if (rang > 0)
+	while ((p->i)--)
+		l = l->next;
+	sh = l->content;
+	if (sh->id != 'y')
+		return ;
+	if (p->vec.x == 1)
 	{
-		while (--rang)
-			l = l->next;
-		to_del = l->next;
-		display_obj(to_del);
-		if (to_del->next)
-			tmp = to_del->next;
-		ft_lstdelone(to_del, del_fct);
-		l->next = tmp;
+		sh->vector.y = cos(p->mult * M_PI / 180) - sin(p->mult * M_PI / 180);
+		sh->vector.z = sin(p->mult * M_PI / 180) + cos(p->mult * M_PI / 180);
 	}
-	else
+	if (p->vec.y == 1)
 	{
-		to_del = l;
-		display_obj(to_del);
-		tmp = to_del->next;
-		ft_lstdelone(to_del, del_fct);
-		mlx->sc->shape = tmp;
+		sh->vector.z = cos(p->mult * M_PI / 180) - sin(p->mult * M_PI / 180);
+		sh->vector.x = sin(p->mult * M_PI / 180) + cos(p->mult * M_PI / 180);
 	}
+	if (p->vec.z == 1)
+	{
+		sh->vector.x = cos(p->mult * M_PI / 180) - sin(p->mult * M_PI / 180);
+		sh->vector.y = sin(p->mult * M_PI / 180) + cos(p->mult * M_PI / 180);
+	}
+	sh->vector = v_normaliz(sh->vector);
+	new_cy(mlx, l, sh);
 }
 
-void		ft_parse_from_term_choice(t_mlx *mlx, t_list *l)
+static int	parse_transrota(t_mlx *mlx, t_translarota *p)
 {
-	char	*line;
-	char	*li;
-	int		i;
+	char			*line;
+	char			*li;
 
-	if (!l)
-		return ;
 	if (get_next_line(0, &line) < 0)
 		error_minirt(22, mlx);
 	if (!ft_isdigit(*line))
 	{
 		printf("Not a number !\n");
-		return ;
+		free(line);
+		return (0);
 	}
 	li = line;
-	i = trim_int(&line);
+	p->i = trim_int(&line);
+	trim_ws(&line);
+	trim_coord(&line, &p->vec, mlx);
+	trim_ws(&line);
+	p->mult = trim_float(&line, mlx);
+	trim_ws(&line);
+	p->op = 0;
+	p->op = *line;
 	free(li);
-	printf("%d\n", ft_lstsize(l));
-	if (ft_lstsize(l) < i)
+	return (1);
+}
+
+void		ft_parse_from_term_choice(t_mlx *mlx, t_list *l, int k)
+{
+	t_translarota	p;
+
+	if (!l)
+		return ;
+	if (!parse_transrota(mlx, &p))
+		return ;
+	if (ft_lstsize(l) < p.i)
 	{
 		printf("Elem not in the list\n");
 		return ;
 	}
+	else if (p.op == 'r')
+		modif_elem_list_rota(mlx, &p);
 	else
-		del_one_elem_list(i, mlx, l);
+	{
+		p.vec = v_mult(&p.vec, p.mult);
+		modif_elem_list(mlx, &p, k);
+	}
 }
