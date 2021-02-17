@@ -12,17 +12,6 @@
 
 #include "mini_rt.h"
 
-// void		ft_parse_from_term(t_mlx *mlx)
-// {
-// 	char	*line;
-
-// 	if (get_next_line(0, &line) < 0)
-// 		error_minirt(22, mlx);
-// 	parse_line(line, mlx);
-// 	free(line);
-// 	printf("working...\n");
-// }
-
 void	del_one_elem_list(int rang, t_list *l)
 {
 	t_list	*tmp;
@@ -50,35 +39,8 @@ void	del_one_elem_list(int rang, t_list *l)
 
 void	new_cy(t_mlx *mlx, t_list *l, t_shape *sh)
 {
+	sh->vector = v_normaliz(sh->vector);
 	del_one_elem_list(1, l);
 	del_one_elem_list(1, l);
 	add_disk_cylinder(mlx, sh);
 }
-
-// void		ft_parse_from_term_choice(t_mlx *mlx, t_list *l)
-// {
-// 	char	*line;
-// 	char	*li;
-// 	int		i;
-
-// 	if (!l)
-// 		return ;
-// 	if (get_next_line(0, &line) < 0)
-// 		error_minirt(22, mlx);
-// 	if (!ft_isdigit(*line))
-// 	{
-// 		printf("Not a number !\n");
-// 		return ;
-// 	}
-// 	li = line;
-// 	i = trim_int(&line);
-// 	free(li);
-// 	printf("%d\n", ft_lstsize(l));
-// 	if (ft_lstsize(l) < i)
-// 	{
-// 		printf("Elem not in the list\n");
-// 		return ;
-// 	}
-// 	else
-// 		del_one_elem_list(i, l);
-// }
