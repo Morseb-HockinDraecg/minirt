@@ -22,7 +22,7 @@ void	add_disk_cylinder(t_mlx *mlx, t_shape *cy)
 	sq->origin = cy->origin;
 	sq->rgb = cy->rgb;
 	sq->height = 2 * cy->r;
-	sq->vector = cy->vector;
+	sq->vector = v_mult(&cy->vector, -1);
 	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(sq));
 	sq2 = init_shape();
 	sq2->id = 'k';
