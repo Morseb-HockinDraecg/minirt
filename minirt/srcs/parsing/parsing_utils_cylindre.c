@@ -50,6 +50,7 @@ void	parse_disk(char *line, t_mlx *mlx)
 		error_minirt(23, mlx);
 	trim_ws(&line);
 	trim_coord(&line, &sq->rgb, mlx);
-	check_rgb(&sq->rgb);
+	if (!check_rgb(&sq->rgb))
+		error_minirt(13, mlx);
 	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(sq));
 }

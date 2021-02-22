@@ -45,7 +45,7 @@ void	parse_light(char *line, t_mlx *mlx)
 	trim_ws(&line);
 	trim_coord(&line, &mlx->sc->l.rgb, mlx);
 	if (!check_rgb(&mlx->sc->l.rgb))
-		error_minirt(21, mlx);
+		error_minirt(13, mlx);
 }
 
 void	parse_cam(char *line, t_mlx *mlx)

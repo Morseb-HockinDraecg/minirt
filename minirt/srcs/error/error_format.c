@@ -12,6 +12,11 @@
 
 #include "mini_rt.h"
 
+static void	error_format_3(void)
+{
+	perror("error 13: check RGB");
+}
+
 static void	error_format_2(void)
 {
 	perror("error 12: gnl ");
@@ -35,5 +40,7 @@ void		error_format(int i)
 	else if (i == 1)
 		error_format_1();
 	else if (i == 2)
+		error_format_2();
+	else if (i == 3)
 		error_format_2();
 }

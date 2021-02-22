@@ -14,11 +14,11 @@
 
 int			check_rgb(t_coord *coord)
 {
-	if (coord->x < 0 || coord->x > 255)
+	if (coord->x < 0 && coord->x > 255)
 		return (0);
-	if (coord->y < 0 || coord->y > 255)
+	if (coord->y < 0 && coord->y > 255)
 		return (0);
-	if (coord->z < 0 || coord->z > 255)
+	if (coord->z < 0 && coord->z > 255)
 		return (0);
 	return (1);
 }
