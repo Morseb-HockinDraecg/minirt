@@ -27,6 +27,11 @@ int			error_minirt(int i, t_mlx *mlx)
 		printf("expected : exec + rt file name [--save]\n");
 		exit(i);
 	}
+	if (i == 1)
+	{
+		printf("error : extension file name must be '.rt'\n");
+		exit(-1);
+	}
 	error_code = i / 10;
 	if (error_code == 1)
 		error_format(i);

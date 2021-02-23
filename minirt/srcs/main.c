@@ -12,19 +12,13 @@
 
 #include "mini_rt.h"
 
-void	loop_minirt(t_mlx *mlx)
-{
-	mlx_hook(mlx->win, 2, 1L << 0, key_hook, mlx);
-	mlx_hook(mlx->win, 17, 0, close_win, mlx);
-	mlx_loop(mlx->ptr);
-}
-
 int		main(int argc, char **argv)
 {
 	t_mlx	*mlx;
 
 	if (argc == 2 || argc == 3)
 	{
+		check_file_name(argv[1], NULL);
 		mlx = (t_mlx *)malloc(sizeof(t_mlx));
 		ft_parse(argv[1], mlx);
 		if (argc == 3 && !(ft_strncmp("--save", argv[2], 6)))

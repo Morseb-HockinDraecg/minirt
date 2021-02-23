@@ -14,7 +14,7 @@
 
 static void	error_format_3(void)
 {
-	perror("error 13: check RGB");
+	printf("error 13: check vectors from parsing\n");
 }
 
 static void	error_format_2(void)

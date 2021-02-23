@@ -46,7 +46,7 @@ void	indirect_light(t_mlx *mlx)
 		mlx->tmp.y = 1;
 	if ((mlx->tmp.z += (mlx->sc->l.rgb.z / 255) * mlx->sc->l.r) > 1)
 		mlx->tmp.z = 1;
-	mlx->tmp.x = pow(mlx->tmp.x, 1 /2.2);
-	mlx->tmp.y = pow(mlx->tmp.y, 1 /2.2);
-	mlx->tmp.z = pow(mlx->tmp.z, 1 /2.2);
+	mlx->tmp.x = pow(mlx->tmp.x, 1 / 2.2);
+	mlx->tmp.y = pow(mlx->tmp.y, 1 / 2.2);
+	mlx->tmp.z = pow(mlx->tmp.z, 1 / 2.2);
 }

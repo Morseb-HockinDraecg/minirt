@@ -238,5 +238,7 @@ void			save_bmp(const char *filename, t_mlx *mlx);
 void			del_fct(void *x);
 void			del_one_elem_list(int rang, t_list *l);
 void			new_cy(t_mlx *mlx, t_list *l, t_shape *sh);
+void			loop_minirt(t_mlx *mlx);
+void			check_file_name(char *argv, t_mlx *mlx);
 
 #endif
