@@ -35,7 +35,7 @@ void	parse_cylindre(char *line, t_mlx *mlx)
 	trim_ws(&line);
 	trim_coord(&line, &cy->rgb, mlx);
 	if (!check_rgb(&cy->rgb))
-		error_minirt(13);
+		error_minirt(13, mlx);
 	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(cy));
 	add_disk_cylinder(mlx, cy);
 }
@@ -56,7 +56,7 @@ void	parse_sphere(char *line, t_mlx *mlx)
 	trim_ws(&line);
 	trim_coord(&line, &sp->rgb, mlx);
 	if (!check_rgb(&sp->rgb))
-		error_minirt(13);
+		error_minirt(13, mlx);
 	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(&(*sp)));
 }
 
@@ -80,7 +80,7 @@ void	parse_square(char *line, t_mlx *mlx)
 	trim_ws(&line);
 	trim_coord(&line, &sq->rgb, mlx);
 	if (!check_rgb(&sq->rgb))
-		error_minirt(13);
+		error_minirt(13, mlx);
 	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(sq));
 }
 
@@ -101,7 +101,7 @@ void	parse_plane(char *line, t_mlx *mlx)
 	trim_ws(&line);
 	trim_coord(&line, &pl->rgb, mlx);
 	if (!check_rgb(&pl->rgb))
-		error_minirt(13);
+		error_minirt(13, mlx);
 	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(pl));
 }
 
@@ -122,6 +122,6 @@ void	parse_triangle(char *line, t_mlx *mlx)
 	trim_ws(&line);
 	trim_coord(&line, &tr->rgb, mlx);
 	if (!check_rgb(&tr->rgb))
-		error_minirt(13);
+		error_minirt(13, mlx);
 	ft_lstadd_back(&mlx->sc->shape, ft_lstnew(tr));
 }

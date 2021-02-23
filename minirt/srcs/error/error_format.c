@@ -42,5 +42,5 @@ void		error_format(int i)
 	else if (i == 2)
 		error_format_2();
 	else if (i == 3)
-		error_format_2();
+		error_format_3();
 }

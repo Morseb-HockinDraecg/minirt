@@ -216,7 +216,7 @@ int				get_r(int trgb);
 int				get_g(int trgb);
 int				get_b(int trgb);
 void			get_color(t_mlx *mlx, int i, int j, t_ray *ray);
-float			direct_light(t_mlx *mlx, t_list *spots, t_coord *p, t_coord *n);
+t_coord			direct_light(t_mlx *mlx, t_list *spots, t_coord *p, t_coord *n);
 void			indirect_light(t_mlx *mlx);
 
 /*

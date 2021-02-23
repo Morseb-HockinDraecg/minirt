@@ -36,19 +36,18 @@ void	get_color(t_mlx *mlx, int i, int j, t_ray *ray)
 {
 	t_coord	p;
 	t_coord	n;
-	float	i_pixel;
+	t_coord	i_pixel;
 	t_list	*spots;
 
 	spots = mlx->sc->s;
 	v_init(&ray->rgb, 0, 0, 0);
-	i_pixel = 0;
 	if (scene_intersection(ray, mlx->sc->shape, &p, &n))
 	{
+		v_init(&i_pixel, 0, 0, 0);
 		if (spots)
 			i_pixel = direct_light(mlx, spots, &p, &n);
-		mlx->tmp.x = i_pixel;
-		mlx->tmp.y = i_pixel;
-		mlx->tmp.z = i_pixel;
+		mlx->tmp = i_pixel;
+		mlx->tmp.x = i_pixel.x;
 		indirect_light(mlx);
 	}
 	my_mlx_pixel_put(mlx, i, j, create_trgb(00, ray->rgb.x * mlx->tmp.x,\

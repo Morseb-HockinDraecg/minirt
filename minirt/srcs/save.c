@@ -85,7 +85,8 @@ void			save_bmp(const char *filename, t_mlx *mlx)
 	img_size = mlx->w * 4 * mlx->h;
 	file_size = img_size + (40 + 14);
 	close(open(filename, O_RDONLY | O_CREAT, S_IRWXU));
-	fd = open(filename, O_RDWR);
+	if ((fd = open(filename, O_RDWR)) < 0)
+		error_minirt(12, mlx);
 	write(fd, create_bitmap_file_header(file_size), 14);
 	write(fd, create_bitmap_info_header(mlx), 40);
 	write_img(fd, mlx);
