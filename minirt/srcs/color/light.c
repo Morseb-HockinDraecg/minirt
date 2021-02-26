@@ -29,7 +29,7 @@ t_coord	direct_light(t_mlx *mlx, t_list *spots, t_coord *p, t_coord *n)
 		{
 			if ((i = v_dot(v_normaliz(v_sub(s->origin, *p)), *n)) < 0)
 				i = 0;
-			if ((i = (s->r / M_PI) * 1000000.0 * i / v_n2(&mlx->tmp)) > 255)
+			if ((i = (s->r / M_PI) * 100.0 * i / v_n2(&mlx->tmp)) > 255)
 				i = 255;
 			rgb = v_plus(rgb, v_mult(&s->rgb, i));
 		}
